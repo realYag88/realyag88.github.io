@@ -17,7 +17,7 @@ const TOOLS = [
     title: "Film study viewer",
     desc: "参考画像を一定時間ごとに切り替えるクロッキー練習用のスライドショー。分割線を表示できる。",
     url: "https://caprame.com/FilmStudyViewer/",
-    image: "",
+    image: "images/film-study-viewer.jpg",
     color: "#2a2e38",
   },
   {
