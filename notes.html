@@ -48,7 +48,26 @@
 
   <main class="wrap">
     <div class="notes">
-      <p class="note-empty" data-en="No posts yet.">まだ記事はありません。</p>
+      <ul class="note-cards" id="note-list">
+        <li data-tags="雑記">
+          <a class="note-card" href="/notes/2026-10-16-0039/">
+            <span class="note-card-text">
+              <time datetime="2026-10-16">2026.10.16</time>
+              <span class="note-title">テスト</span>
+              <span class="note-excerpt">テスト</span>
+              <span class="note-tags"><span class="note-tag"><span data-en="Journal">雑記</span></span></span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <nav class="note-pager" id="note-pager" aria-label="ページ送り" hidden></nav>
+      <section class="note-filter-wrap">
+        <h2 data-en="Tags">タグ</h2>
+        <div class="note-filter" role="group" aria-label="タグで絞り込む">
+          <button type="button" data-tag="" aria-pressed="true">All</button>
+          <button type="button" data-tag="雑記" aria-pressed="false"><span data-en="Journal">雑記</span><span class="note-count">1</span></button>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -59,5 +78,78 @@
     <span>© 2026 caprame. All rights reserved.</span>
   </footer>
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "991d75fb98894c599ec91ff6296ff0bf"}'></script><!-- End Cloudflare Web Analytics -->
+  <script>
+  /* タグの絞り込みとページ送り。?tag=〇〇&page=2 のように開くとその状態で表示する */
+  (function () {
+    var PER = 10;
+    var list = document.getElementById("note-list");
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll("li"));
+    var pager = document.getElementById("note-pager");
+    var btns = document.querySelectorAll(".note-filter button");
+    var state = { tag: "", page: 1 };
+
+    function en() { return window.caprameLang && window.caprameLang() === "en"; }
+
+    function read() {
+      var q = new URL(location.href).searchParams;
+      state.tag = q.get("tag") || "";
+      state.page = Math.max(1, parseInt(q.get("page"), 10) || 1);
+    }
+    function write() {
+      var u = new URL(location.href);
+      if (state.tag) u.searchParams.set("tag", state.tag); else u.searchParams.delete("tag");
+      if (state.page > 1) u.searchParams.set("page", state.page); else u.searchParams.delete("page");
+      history.replaceState(null, "", u);
+    }
+
+    function pageBtn(label, page, opts) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      if (opts.current) b.setAttribute("aria-current", "page");
+      if (opts.disabled) b.disabled = true;
+      if (opts.label) b.setAttribute("aria-label", opts.label);
+      b.addEventListener("click", function () {
+        state.page = page; write(); draw();
+        list.scrollIntoView({ block: "start" });
+      });
+      return b;
+    }
+
+    function draw() {
+      var hits = items.filter(function (li) {
+        return !state.tag || li.getAttribute("data-tags").split("|").indexOf(state.tag) >= 0;
+      });
+      var pages = Math.max(1, Math.ceil(hits.length / PER));
+      if (state.page > pages) state.page = pages;
+      var from = (state.page - 1) * PER;
+      items.forEach(function (li) { li.hidden = true; });
+      hits.slice(from, from + PER).forEach(function (li) { li.hidden = false; });
+
+      pager.textContent = "";
+      pager.hidden = pages < 2;
+      if (pages > 1) {
+        pager.appendChild(pageBtn(en() ? "← Prev" : "← 前へ", state.page - 1, { disabled: state.page === 1 }));
+        for (var i = 1; i <= pages; i++) {
+          pager.appendChild(pageBtn(String(i), i, { current: i === state.page, label: (en() ? "Page " : "ページ ") + i }));
+        }
+        pager.appendChild(pageBtn(en() ? "Next →" : "次へ →", state.page + 1, { disabled: state.page === pages }));
+      }
+      btns.forEach(function (b) {
+        b.setAttribute("aria-pressed", String((b.getAttribute("data-tag") || "") === state.tag));
+      });
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.tag = b.getAttribute("data-tag") || "";
+        state.page = 1; write(); draw();
+      });
+    });
+    document.addEventListener("caprame:langchange", draw);
+    read(); draw();
+  })();
+  </script>
 </body>
 </html>
