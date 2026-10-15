@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-en="TimeCode Calculator | caprame">TimeCode Calculator | カプラメー</title>
+  <meta name="description" content="フレーム数と24fps・30fpsのタイムコードを相互に換算できる電卓です。解像度の縦横比計算もできます。">
+  <meta name="theme-color" content="#1b1a1f">
+  <link rel="canonical" href="https://caprame.com/tools/timecode-calculator/">
+  <meta property="og:title" content="TimeCode Calculator | カプラメー">
+  <meta property="og:description" content="フレーム数と24fps・30fpsのタイムコードを相互に換算できる電卓です。解像度の縦横比計算もできます。">
+  <meta property="og:url" content="https://caprame.com/tools/timecode-calculator/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://caprame.com/images/timecode-calculator.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/i18n.js"></script>
+</head>
+<body>
+  <header class="wrap site-header">
+    <a class="brand" href="/">
+      <img class="brand-eye" src="/logo.svg" alt="">
+      <span class="brand-text">
+        <span class="brand-name">カプラメー</span>
+        <span class="brand-sub">CAPRAME</span>
+      </span>
+    </a>
+    <div class="header-right">
+      <nav class="tabs" aria-label="カテゴリ">
+        <a class="tab" href="/" aria-current="true">Tools</a>
+        <a class="tab" href="/games.html">Games</a>
+        <a class="tab" href="/about.html">About</a>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ja" aria-pressed="true">JA</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="icon-link" href="https://x.com/_caprame_" rel="me noopener" target="_blank" aria-label="X（@_caprame_）">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="detail">
+    <a class="back-link" href="/" data-en="← All tools">← Tools 一覧</a>
+
+    <h1>TimeCode Calculator</h1>
+    <p class="detail-lead" data-lang-block="ja">フレーム数と24fps・30fpsのタイムコードを相互に換算できる電卓です。解像度の縦横比計算もできます。</p>
+    <p class="detail-lead" data-lang-block="en">A calculator that converts between frame counts and 24fps / 30fps timecode. It also has a tab for aspect-ratio resizing.</p>
+
+    <div class="detail-shot" style="--tile-color:#2a2e38">
+      <img src="/images/timecode-calculator.jpg" alt="" width="1280" height="800">
+    </div>
+
+    <div class="detail-actions">
+      <a class="btn btn-primary" href="/timecode-calculator/" data-en="Open web version →">Web版を開く →</a>
+      <a class="btn btn-secondary" href="/timecode-calculator/TimeCodeCalculator.exe" download data-en="Download for Windows (.exe)">Windows版をダウンロード(.exe)</a>
+    </div>
+    <p class="detail-note" data-lang-block="ja">Windows版はインストール不要で、ダウンロードしたexeをダブルクリックするだけで使えます。初めて開くときに「WindowsによってPCが保護されました」と出た場合は、「詳細情報」→「実行」を押してください(個人で作ったアプリに署名がないために出る表示です)。</p>
+    <p class="detail-note" data-lang-block="en">The Windows version needs no installation; just double-click the exe. If Windows shows “Windows protected your PC” the first time, click “More info” → “Run anyway” (this appears because the app is not code-signed).</p>
+
+    <section class="detail-section">
+      <h2 data-en="Good for">こんなときに</h2>
+      <ul data-lang-block="ja">
+        <li>カットの尺を、フレーム数と秒+コマで行き来したいとき</li>
+        <li>24fpsと30fpsで尺がどう変わるか確かめたいとき</li>
+        <li>素材を縦横比を保ったままリサイズしたいとき</li>
+      </ul>
+      <ul data-lang-block="en">
+        <li>Going back and forth between frame counts and seconds + frames</li>
+        <li>Checking how a duration maps between 24fps and 30fps</li>
+        <li>Resizing footage while keeping its aspect ratio</li>
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <h2 data-en="How to use">使い方</h2>
+      <ol data-lang-block="ja">
+        <li>数字を入力して表示部をクリック(タップ)すると、FRAME → 24FPS → 30FPS の順に換算されます</li>
+        <li>タイムコードは右から詰めて入力します。「210」と打つと2秒10コマです</li>
+        <li>普通の電卓としても使えます。24FPS・30FPSのときの足し算・引き算は、そのままタイムコードの計算になります</li>
+        <li>「解像度」タブでは、元サイズと変換後の幅か高さを入れると、もう一方がすぐに出ます(端数は切り上げ)</li>
+      </ol>
+      <ol data-lang-block="en">
+        <li>Type a number and click (tap) the display to convert: FRAME → 24FPS → 30FPS</li>
+        <li>Timecode is entered from the right: typing “210” means 2 seconds 10 frames</li>
+        <li>It also works as a normal calculator; adding and subtracting in 24FPS / 30FPS mode works in timecode</li>
+        <li>In the resolution tab, enter the original size and a new width or height to get the other side (rounded up)</li>
+      </ol>
+    </section>
+
+    <section class="detail-section">
+      <h2 data-en="Features">主な機能</h2>
+      <ul data-lang-block="ja">
+        <li>キーボード操作:Enter=「=」/ Esc=C / Delete=CE / Backspace=1文字消す / Tab=モード切替</li>
+        <li>Web版は Alt+1・Alt+2 でタブ切替(Windows版は Ctrl+Tab)</li>
+        <li>解像度タブの元サイズは、次に開いたときも残ります</li>
+      </ul>
+      <ul data-lang-block="en">
+        <li>Keyboard: Enter = “=”, Esc = C, Delete = CE, Backspace = delete one digit, Tab = switch mode</li>
+        <li>Switch tabs with Alt+1 / Alt+2 on the web (Ctrl+Tab in the Windows app)</li>
+        <li>The original size in the resolution tab is remembered</li>
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <dl class="detail-spec">
+        <dt data-en="Works on">対応環境</dt>
+        <dd><span data-lang-block="ja">Web版:スマホ・PCのブラウザ / Windows版:Windows 10・11</span><span data-lang-block="en">Web: phone and desktop browsers / App: Windows 10 and 11</span></dd>
+        <dt data-en="Your data">データの保存</dt>
+        <dd><span data-lang-block="ja">Web版は元サイズの設定だけをこの端末のブラウザに保存します。</span><span data-lang-block="en">The web version only saves the original size setting in this device&#x27;s browser.</span></dd>
+      </dl>
+    </section>
+    </article>
+  </main>
+
+  <footer class="wrap site-footer">
+    <span class="footer-links">
+      <a href="/privacy.html" data-en="Privacy Policy">プライバシーポリシー</a>
+    </span>
+    <span>© 2026 caprame. All rights reserved.</span>
+  </footer>
+  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "991d75fb98894c599ec91ff6296ff0bf"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

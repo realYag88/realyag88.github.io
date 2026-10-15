@@ -15,9 +15,20 @@ function renderTiles(gridId, items) {
   function draw() {
   grid.textContent = "";
   items.forEach(function (tool) {
-    const tile = document.createElement(tool.url ? "a" : "div");
+    // page（説明ページ）があればそちらへ。なければ url へ直接
+    const href = tool.page || tool.url;
+    const tile = document.createElement(href ? "a" : "div");
     tile.className = "tile";
-    if (tool.url) tile.href = tool.url;
+    if (href) tile.href = href;
+    // note など外部サイトへのリンクは新しいタブで開き、右上に目印を出す
+    if (tool.external) {
+      tile.target = "_blank";
+      tile.rel = "noopener";
+      const badge = document.createElement("span");
+      badge.className = "tile-badge";
+      badge.textContent = tool.external + " ↗";
+      tile.appendChild(badge);
+    }
     if (tool.color) tile.style.setProperty("--tile-color", tool.color);
 
     if (tool.image) {
@@ -43,7 +54,11 @@ function renderTiles(gridId, items) {
 
     const go = document.createElement("span");
     go.className = "tile-go";
-    go.textContent = tool.url ? (lang() === "en" ? "Open →" : "開く →") : (lang() === "en" ? "Coming soon" : "準備中");
+    const en = lang() === "en";
+    if (!href) go.textContent = en ? "Coming soon" : "準備中";
+    else if (tool.external) go.textContent = en ? "Read on " + tool.external + " ↗" : tool.external + " で読む ↗";
+    else if (tool.page) go.textContent = en ? "Details →" : "詳しく見る →";
+    else go.textContent = en ? "Open →" : "開く →";
     info.appendChild(go);
 
     tile.appendChild(info);

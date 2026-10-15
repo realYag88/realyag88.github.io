@@ -5,8 +5,10 @@
   title : タイルに出る名前
   desc  : カーソルを乗せたときに出る説明（1〜2文）
   title_en / desc_en : 英語表示のときの名前と説明（なくてもOK。ないときは日本語のまま出ます）
-  url   : ツールのアドレス（https://caprame.com/リポジトリ名/）。
-          空 "" のままだとタイルは押せない状態で表示されます
+  page  : 説明ページのアドレス（tools/〇〇/）。タイルを押すとここに移動します
+  url   : ツール本体のアドレス（https://caprame.com/リポジトリ名/）。
+          page がないときはタイルから直接ここに移動します。
+          page も url も空 "" だと、タイルは押せない「準備中」の表示になります
   image : スクショ画像のパス（images フォルダに入れる）。
           空 "" のままだと color の色だけのタイルになります
   color : 画像がないとき・読み込み中の背景色
@@ -19,6 +21,7 @@ const TOOLS = [
     desc: "参考画像を一定時間ごとに切り替えるクロッキー練習用のスライドショー。分割線を表示できる。",
     title_en: "Film study viewer",
     desc_en: "A slideshow for croquis practice that switches reference images on a timer, with composition guide overlays. (Japanese UI)",
+    page: "tools/film-study-viewer/",
     url: "https://caprame.com/FilmStudyViewer/",
     image: "images/film-study-viewer.jpg",
     color: "#2a2e38",
@@ -28,6 +31,7 @@ const TOOLS = [
     desc: "ストレッチの秒数をくり返し計るループ式のタイマー。",
     title_en: "Stretch Loop",
     desc_en: "A looping interval timer for stretching. (Japanese UI)",
+    page: "tools/stretch-loop/",
     url: "https://caprame.com/stretch-loop/",
     image: "images/stretch-loop.jpg",
     color: "#24302e",
@@ -37,6 +41,7 @@ const TOOLS = [
     desc: "課題曲、YouTubeの区間ループ、基礎練、メトロノームをまとめたベース練習用webアプリ",
     title_en: "Bass Practice Notebook",
     desc_en: "A bass practice web app with a song list, YouTube A–B looping, basic drills and a metronome. (Japanese UI)",
+    page: "tools/bass-practice/",
     url: "https://caprame.com/bass-practice/",
     image: "images/bass-practice.jpg",
     color: "#332828",
@@ -46,8 +51,19 @@ const TOOLS = [
     desc: "部位別のメニューとセットを記録できる筋トレ記録アプリ。体重やカレンダーも搭載。",
     title_en: "Workout Log",
     desc_en: "A workout tracker for logging exercises and sets by muscle group, with body weight and a calendar. (Japanese UI)",
+    page: "tools/kintore-log/",
     url: "https://caprame.com/kintore-log/",
     image: "images/kintore-log.jpg",
     color: "#2a2833",
+  },
+  {
+    title: "TimeCode Calculator",
+    desc: "フレーム数と24fps・30fpsのタイムコードを換算できる電卓。解像度の縦横比計算も。Web版とWindows版あり。",
+    title_en: "TimeCode Calculator",
+    desc_en: "Converts between frame counts and 24fps / 30fps timecode, plus aspect-ratio resizing. Web and Windows versions.",
+    page: "tools/timecode-calculator/",
+    url: "https://caprame.com/timecode-calculator/",
+    image: "images/timecode-calculator.jpg",
+    color: "#2b2620",
   },
 ];
