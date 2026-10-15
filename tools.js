@@ -15,28 +15,28 @@
 const TOOLS = [
   {
     title: "Film study viewer",
-    desc: "参考画像を一定時間ごとに切り替える、クロッキー練習用のスライドショー。分割線も重ねられます。",
+    desc: "参考画像を一定時間ごとに切り替えるクロッキー練習用のスライドショー。分割線を表示できる。",
     url: "https://caprame.com/FilmStudyViewer/",
     image: "",
     color: "#2a2e38",
   },
   {
     title: "ストレッチループ",
-    desc: "ストレッチの秒数をくり返し計る、ループ式のタイマー。",
+    desc: "ストレッチの秒数をくり返し計るループ式のタイマー。",
     url: "https://caprame.com/stretch-loop/",
     image: "",
     color: "#24302e",
   },
   {
     title: "ベース練習帳",
-    desc: "課題曲、YouTubeの区間ループ、基礎練、メトロノームをまとめたベース練習用アプリ。",
+    desc: "課題曲、YouTubeの区間ループ、基礎練、メトロノームをまとめたベース練習用webアプリ",
     url: "https://caprame.com/bass-practice/",
     image: "",
     color: "#332828",
   },
   {
     title: "筋トレログ",
-    desc: "部位別のメニューとセットを記録できる筋トレ記録アプリ。体重やカレンダーも。",
+    desc: "部位別のメニューとセットを記録できる筋トレ記録アプリ。体重やカレンダーも搭載。",
     url: "https://caprame.com/kintore-log/",
     image: "",
     color: "#2a2833",
