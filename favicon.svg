@@ -2,8 +2,8 @@
   <!-- タブ用アイコン。logo.svg と同じ形を暗い背景の上に置いたもの -->
   <defs>
     <clipPath id="pupil-cut">
-      <rect x="0" y="0" width="48" height="21.25"/>
-      <rect x="0" y="26.75" width="48" height="21.25"/>
+      <path d="M0 0H48V21.25H33.25A11.85 4.4 0 0 0 14.75 21.25H0Z"/>
+      <path d="M0 48H48V26.75H33.25A11.85 4.4 0 0 1 14.75 26.75H0Z"/>
     </clipPath>
   </defs>
   <rect width="48" height="48" rx="10" fill="#1b1a1f"/>

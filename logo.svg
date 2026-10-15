@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 28">
   <!-- カプラメーのロゴ（ヤギの目）。金色の部分だけで、背景と横棒の部分は透明 -->
   <defs>
+    <!-- 横棒の切り抜き。虹彩の中だけ上下に弧を描いてふくらむ -->
     <clipPath id="pupil-cut">
-      <rect x="0" y="0" width="48" height="11.5"/>
-      <rect x="0" y="16.5" width="48" height="11.5"/>
+      <path d="M0 0H48V11.5H33.76A12.5 4 0 0 0 14.24 11.5H0Z"/>
+      <path d="M0 28H48V16.5H33.76A12.5 4 0 0 1 14.24 16.5H0Z"/>
     </clipPath>
   </defs>
   <g clip-path="url(#pupil-cut)">
