@@ -255,3 +255,18 @@ main { flex: 1; }
 .doc a:hover { color: var(--text); }
 
 .footer-links { display: flex; flex-wrap: wrap; gap: 0 24px; }
+
+/* ----- ヘッダー右側（タブとXアイコン） ----- */
+.header-right { display: flex; align-items: center; gap: 8px; }
+.icon-link {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+.icon-link:hover { color: var(--accent); border-color: var(--accent); }
