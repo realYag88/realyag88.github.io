@@ -8,7 +8,7 @@ const GAMES = [
     title: "ローグライクサモンカードゲーム",
     desc: "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトル。階層を進みながらデッキを育てていきます。",
     url: "https://caprame.com/DotRoguelikeCardBattle/",
-    image: "",
+    image: "images/summon-card.jpg",
     color: "#2e2a24",
   },
 ];
