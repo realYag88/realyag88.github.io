@@ -253,3 +253,5 @@ main { flex: 1; }
 .doc ul { padding-left: 1.4em; }
 .doc a { color: var(--accent); }
 .doc a:hover { color: var(--text); }
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 0 24px; }
