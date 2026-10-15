@@ -257,7 +257,7 @@ main { flex: 1; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 0 24px; }
 
 /* ----- ヘッダー右側（タブとXアイコン） ----- */
-.header-right { display: flex; align-items: center; gap: 8px; }
+.header-right { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .icon-link {
   width: 44px;
   height: 44px;
@@ -270,3 +270,33 @@ main { flex: 1; }
   color: var(--text);
 }
 .icon-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ----- 言語の切り替え ----- */
+html[data-lang="en"] [data-lang-block="ja"],
+html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
+
+.lang-toggle {
+  height: 44px;
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang-toggle button {
+  min-width: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.lang-toggle button:hover { color: var(--accent); }
+.lang-toggle button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+}
+.lang-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }

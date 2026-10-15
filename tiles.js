@@ -4,6 +4,16 @@ function renderTiles(gridId, items) {
   const grid = document.getElementById(gridId);
   if (!grid) return;
 
+  function lang() {
+    return window.caprameLang ? window.caprameLang() : "ja";
+  }
+  // 英語表示のときは title_en / desc_en を使う（なければ日本語のまま）
+  function pick(item, key) {
+    return lang() === "en" && item[key + "_en"] ? item[key + "_en"] : item[key];
+  }
+
+  function draw() {
+  grid.textContent = "";
   items.forEach(function (tool) {
     const tile = document.createElement(tool.url ? "a" : "div");
     tile.className = "tile";
@@ -23,22 +33,24 @@ function renderTiles(gridId, items) {
 
     const title = document.createElement("span");
     title.className = "tile-title";
-    title.textContent = tool.title;
+    title.textContent = pick(tool, "title");
     info.appendChild(title);
 
     const desc = document.createElement("span");
     desc.className = "tile-desc";
-    desc.textContent = tool.desc;
+    desc.textContent = pick(tool, "desc");
     info.appendChild(desc);
 
     const go = document.createElement("span");
     go.className = "tile-go";
-    go.textContent = tool.url ? "開く →" : "準備中";
+    go.textContent = tool.url ? (lang() === "en" ? "Open →" : "開く →") : (lang() === "en" ? "Coming soon" : "準備中");
     info.appendChild(go);
 
     tile.appendChild(info);
     grid.appendChild(tile);
   });
+  fillLastRow();
+  }
 
   // 最後の段が半端なときは、空きタイルで埋めて見た目をそろえる
   function fillLastRow() {
@@ -53,6 +65,7 @@ function renderTiles(gridId, items) {
       grid.appendChild(empty);
     }
   }
-  fillLastRow();
+  draw();
   window.addEventListener("resize", fillLastRow);
+  document.addEventListener("caprame:langchange", draw);
 }

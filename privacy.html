@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>プライバシーポリシー | カプラメー</title>
+  <title data-en="Privacy Policy | caprame">プライバシーポリシー | カプラメー</title>
   <meta name="description" content="カプラメーのプライバシーポリシー">
   <meta name="theme-color" content="#1b1a1f">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script src="i18n.js"></script>
 </head>
 <body>
   <header class="wrap site-header">
@@ -21,15 +22,21 @@
         <span class="brand-sub">CAPRAME</span>
       </span>
     </a>
-    <nav class="tabs" aria-label="カテゴリ">
-      <a class="tab" href="./">Tools</a>
-      <a class="tab" href="games.html">Games</a>
-      <a class="tab" href="about.html">About</a>
-    </nav>
+    <div class="header-right">
+      <nav class="tabs" aria-label="カテゴリ">
+        <a class="tab" href="./">Tools</a>
+        <a class="tab" href="games.html">Games</a>
+        <a class="tab" href="about.html">About</a>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ja" aria-pressed="true">JA</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
   </header>
 
   <main class="wrap">
-    <article class="doc">
+    <article class="doc" data-lang-block="ja" lang="ja">
       <h1>プライバシーポリシー</h1>
       <p class="doc-date">制定日：2026年10月15日</p>
 
@@ -65,11 +72,48 @@
       <p>お問い合わせは、下記のメールアドレスまでお願いいたします。迷惑メール対策のため「＠」を全角にしています。送信時は半角の「@」に置き換えてください。</p>
       <p>capramecontact＠gmail.com</p>
     </article>
+
+    <article class="doc" data-lang-block="en" lang="en">
+      <h1>Privacy Policy</h1>
+      <p class="doc-date">Effective: October 15, 2026</p>
+
+      <p>This page explains how caprame ("this site") handles personal information and usage data.</p>
+
+      <h2>Data you enter in the tools</h2>
+      <p>Records and settings you enter in the tools on this site are stored only in your own browser. They are never sent to the site operator or to any external server.</p>
+      <p>Clearing your browser history or site data will also delete what you saved. Data is not shared between devices or browsers.</p>
+
+      <h2>Advertising</h2>
+      <p>This site may use Google AdSense, a third-party advertising service.</p>
+      <p>Advertising providers, including Google, may use cookies to show ads based on your previous visits to this site and other sites. These cookies do not contain personally identifiable information such as your name or address.</p>
+      <p>See <a href="https://policies.google.com/technologies/partner-sites">Google's Privacy &amp; Terms</a> for how Google uses this information. You can turn off personalized ads in <a href="https://adssettings.google.com/">Ad Settings</a>.</p>
+
+      <h2>Affiliate programs</h2>
+      <p>This site may take part in affiliate programs such as Amazon Associates. If you buy a product through a link on this site, the site may receive a referral fee.</p>
+
+      <h2>Third-party services</h2>
+      <p>This site is hosted on GitHub Pages and uses Google Fonts. When a page is displayed, information such as your IP address may be sent to these services, and is handled according to their own privacy policies.</p>
+
+      <h2>Analytics</h2>
+      <p>This site uses Cloudflare Web Analytics to understand how it is used. It collects aggregated data such as pages viewed, referrers, approximate region and device type. It does not use cookies and does not collect personally identifiable information.</p>
+      <p>See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's Privacy Policy</a> for details.</p>
+
+      <h2>Disclaimer</h2>
+      <p>We try to keep the tools and information on this site accurate, but we do not guarantee their accuracy or safety. The operator is not responsible for any damage resulting from the use of this site.</p>
+      <p>The content of external sites linked from this site is the responsibility of their respective operators.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>This policy may be updated without notice when necessary. Changes take effect when they are posted on this page.</p>
+
+      <h2>Contact</h2>
+      <p>Please contact us at the email address below. To prevent spam, the "@" is written in full width; please replace it with a regular "@" when sending.</p>
+      <p>capramecontact＠gmail.com</p>
+    </article>
   </main>
 
   <footer class="wrap site-footer">
     <span class="footer-links">
-      <a href="privacy.html" aria-current="page">プライバシーポリシー</a>
+      <a href="privacy.html" aria-current="page" data-en="Privacy Policy">プライバシーポリシー</a>
     </span>
     <span>© 2026 caprame. All rights reserved.</span>
   </footer>
