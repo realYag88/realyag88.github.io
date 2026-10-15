@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#1b1a1f"/><g transform="translate(0 10)"><path d="M3 14 C12 2, 36 2, 45 14 C36 26, 12 26, 3 14 Z" fill="none" stroke="#d4a64a" stroke-width="2.5"/><circle cx="24" cy="14" r="9" fill="#d4a64a"/><rect x="2" y="11.25" width="44" height="5.5" rx="2.75" fill="#1b1a1f"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- タブ用アイコン。logo.svg と同じ形を暗い背景の上に置いたもの -->
+  <defs>
+    <clipPath id="pupil-cut">
+      <rect x="0" y="0" width="48" height="21.25"/>
+      <rect x="0" y="26.75" width="48" height="21.25"/>
+    </clipPath>
+  </defs>
+  <rect width="48" height="48" rx="10" fill="#1b1a1f"/>
+  <g clip-path="url(#pupil-cut)">
+    <path d="M3 24 C12 12, 36 12, 45 24 C36 36, 12 36, 3 24 Z" fill="none" stroke="#d4a64a" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="24" cy="24" r="9.25" fill="#d4a64a"/>
+  </g>
+</svg>

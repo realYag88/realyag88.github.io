@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 28">
+  <!-- カプラメーのロゴ（ヤギの目）。金色の部分だけで、背景と横棒の部分は透明 -->
+  <defs>
+    <clipPath id="pupil-cut">
+      <rect x="0" y="0" width="48" height="11.5"/>
+      <rect x="0" y="16.5" width="48" height="11.5"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#pupil-cut)">
+    <path d="M2 14 C12 1, 36 1, 46 14 C36 27, 12 27, 2 14 Z" fill="none" stroke="#d4a64a" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="24" cy="14" r="9.75" fill="#d4a64a"/>
+  </g>
+</svg>
