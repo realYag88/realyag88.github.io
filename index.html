@@ -1,1 +1,51 @@
-準備中
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>カプラメー</title>
+  <meta name="description" content="つくったものを、ここに置いていきます。自作ツールの置き場所。">
+  <meta name="theme-color" content="#1b1a1f">
+  <meta property="og:title" content="カプラメー">
+  <meta property="og:description" content="つくったものを、ここに置いていきます。">
+  <meta property="og:url" content="https://caprame.com/">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap site-header">
+    <a class="brand" href="./">
+      <svg class="brand-eye" viewBox="0 0 48 28" role="img" aria-label="カプラメーのロゴ">
+        <path d="M2 14 C12 1, 36 1, 46 14 C36 27, 12 27, 2 14 Z" fill="none" stroke="#d4a64a" stroke-width="2"/>
+        <circle cx="24" cy="14" r="9" fill="#d4a64a"/>
+        <rect x="1" y="11.5" width="46" height="5" rx="2.5" style="fill: var(--bg)"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">カプラメー</span>
+        <span class="brand-sub">CAPRAME</span>
+      </span>
+    </a>
+    <nav class="tabs" aria-label="カテゴリ">
+      <a class="tab" href="./" aria-current="page">Tools</a>
+      <a class="tab" href="about.html">About</a>
+    </nav>
+  </header>
+
+  <p class="wrap lead">つくったものを、ここに置いていきます。</p>
+
+  <main class="wrap">
+    <h2 class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">ツール一覧</h2>
+    <div class="grid" id="tool-grid"></div>
+  </main>
+
+  <footer class="wrap site-footer">
+    © 2026 caprame. All rights reserved.
+  </footer>
+
+  <script src="tools.js"></script>
+</body>
+</html>
