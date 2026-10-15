@@ -18,9 +18,13 @@
     return /^ja\b/i.test(list[0] || "") ? "ja" : "en";
   }
 
+  // 本文が日本語だけのページ（Notes の記事）は、英語表示でも lang="ja" のままにして
+  // ブラウザの翻訳機能が「日本語のページ」として翻訳を提案できるようにする
+  var contentLang = root.getAttribute("data-content-lang");
+
   function apply(lang) {
     root.setAttribute("data-lang", lang);
-    root.lang = lang;
+    root.lang = contentLang || lang;
     document.querySelectorAll("[data-en]").forEach(function (el) {
       if (!el.hasAttribute("data-ja")) el.setAttribute("data-ja", el.textContent);
       el.textContent = lang === "en" ? el.getAttribute("data-en") : el.getAttribute("data-ja");
@@ -37,7 +41,7 @@
 
   var initial = detect();
   root.setAttribute("data-lang", initial);
-  root.lang = initial;
+  root.lang = contentLang || initial;
 
   document.addEventListener("DOMContentLoaded", function () {
     apply(initial);

@@ -6,11 +6,15 @@ content.json から、タイル一覧(tools.js / games.js)と説明ページ(too
 ・文面を変えるときは content.json だけを書き換えて、このスクリプトを実行します
 ・英語(en)の項目が空のときは、日本語の文面をそのまま使います
 ・external(note など)を付けた項目は説明ページを作らず、タイルから直接そのURLへ飛びます
-・_build フォルダはサイトとしては公開されません(GitHub Pages は _ で始まるフォルダを無視します)
+・Notes(ブログ)の記事は _notes フォルダに置きます。書き方は _build/notes.py の先頭を見てください
+・_build・_notes フォルダはサイトとしては公開されません(GitHub Pages は _ で始まるフォルダを無視します)
+・Markdown の変換に python の markdown、画像の撮影情報を消すのに Pillow を使います
+  (入っていなければ pip install markdown pillow)
 """
 import html
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIELDS_TEXT = ["title", "tile", "lead", "env", "data", "note", "language", "howto_label"]
@@ -103,6 +107,53 @@ def section_html(title_ja, title_en, items_ja, items_en, ordered=False):
     </section>"""
 
 
+# ---------------- 共通ヘッダー ----------------
+TABS = [("tools", "/", "Tools"), ("games", "/games.html", "Games"),
+        ("notes", "/notes.html", "Notes"), ("about", "/about.html", "About")]
+
+
+def header_html(current, page_is_list=False):
+    """current: いま開いているタブ。一覧ページなら aria-current="page"、その下のページなら "true" """
+    mark = "page" if page_is_list else "true"
+    rows = []
+    for key, href, label in TABS:
+        cur = f' aria-current="{mark}"' if key == current else ""
+        rows.append(f'        <a class="tab" href="{href}"{cur}>{label}</a>')
+    tabs = "\n".join(rows)
+    return f"""  <header class="wrap site-header">
+    <a class="brand" href="/">
+      <img class="brand-eye" src="/logo.svg" alt="">
+      <span class="brand-text">
+        <span class="brand-name">カプラメー</span>
+        <span class="brand-sub">CAPRAME</span>
+      </span>
+    </a>
+    <div class="header-right">
+      <nav class="tabs" aria-label="カテゴリ">
+{tabs}
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ja" aria-pressed="true">JA</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="icon-link" href="https://x.com/_caprame_" rel="me noopener" target="_blank" aria-label="X（@_caprame_）">
+        {X_ICON}
+      </a>
+    </div>
+  </header>
+"""
+
+
+FOOTER = """  <footer class="wrap site-footer">
+    <span class="footer-links">
+      <a href="/privacy.html" data-en="Privacy Policy">プライバシーポリシー</a>
+    </span>
+    <span>© 2026 caprame. All rights reserved.</span>
+  </footer>
+  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "991d75fb98894c599ec91ff6296ff0bf"}'></script><!-- End Cloudflare Web Analytics -->
+"""
+
+
 def page_html(section, it):
     is_tools = section == "tools"
     sec_label = "Tools" if is_tools else "Games"
@@ -178,30 +229,7 @@ def page_html(section, it):
   <script src="/i18n.js"></script>
 </head>
 <body>
-  <header class="wrap site-header">
-    <a class="brand" href="/">
-      <img class="brand-eye" src="/logo.svg" alt="">
-      <span class="brand-text">
-        <span class="brand-name">カプラメー</span>
-        <span class="brand-sub">CAPRAME</span>
-      </span>
-    </a>
-    <div class="header-right">
-      <nav class="tabs" aria-label="カテゴリ">
-        <a class="tab" href="/"{' aria-current="true"' if is_tools else ''}>Tools</a>
-        <a class="tab" href="/games.html"{'' if is_tools else ' aria-current="true"'}>Games</a>
-        <a class="tab" href="/about.html">About</a>
-      </nav>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button type="button" data-set-lang="ja" aria-pressed="true">JA</button>
-        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
-      </div>
-      <a class="icon-link" href="https://x.com/_caprame_" rel="me noopener" target="_blank" aria-label="X（@_caprame_）">
-        {X_ICON}
-      </a>
-    </div>
-  </header>
-
+{header_html(section)}
   <main class="wrap">
     <article class="detail">
     <a class="back-link" href="{list_href}" data-en="← All {sec_label.lower()}">← {sec_label} 一覧</a>
@@ -232,9 +260,9 @@ def page_html(section, it):
 """
 
 
-def build_sitemap(content):
-    fixed = ["", "games.html", "about.html", "privacy.html"]
-    urls = [f"https://caprame.com/{u}" for u in fixed]
+def build_sitemap(content, note_urls=()):
+    fixed = ["", "games.html", "notes.html", "about.html", "privacy.html"]
+    urls = [f"https://caprame.com/{u}" for u in fixed] + list(note_urls)
     for section in ("tools", "games"):
         for it in content.get(section, []):
             if not it.get("external"):
@@ -266,7 +294,10 @@ def main():
             with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
                 f.write(page_html(section, it))
             print("wrote", f"{section}/{it['slug']}/")
-    build_sitemap(content)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import notes
+    note_urls = notes.build(header_html, FOOTER)
+    build_sitemap(content, note_urls)
     print("wrote tools.js, games.js, sitemap.xml")
 
 
