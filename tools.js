@@ -6,9 +6,9 @@
 const TOOLS = [
   {
     "title": "Film study viewer",
-    "desc": "参考画像を一定時間ごとに切り替えるクロッキー練習用のスライドショー。分割線を表示できる。",
+    "desc": "参考画像を一定時間ごとに切り替えるクロッキー練習用のビューワー。分割線を表示できる。",
     "title_en": "Film study viewer",
-    "desc_en": "A slideshow for croquis practice that switches reference images on a timer, with composition guide overlays. (Japanese UI)",
+    "desc_en": "A croquis practice viewer that switches reference images on a timer, with composition guide overlays.",
     "page": "tools/film-study-viewer/",
     "url": "https://caprame.com/FilmStudyViewer/",
     "image": "images/film-study-viewer.jpg",
@@ -46,9 +46,9 @@ const TOOLS = [
   },
   {
     "title": "TimeCode Calculator",
-    "desc": "フレーム数と24fps・30fpsのタイムコードを換算できる電卓。解像度の縦横比計算も。Web版とWindows版あり。",
+    "desc": "フレーム数と24fps・30fpsのタイムコードを換算できる電卓。解像度の縦横比計算も。",
     "title_en": "TimeCode Calculator",
-    "desc_en": "Converts between frame counts and 24fps / 30fps timecode, plus aspect-ratio resizing. Web and Windows versions.",
+    "desc_en": "Converts between frame counts and 24fps / 30fps timecode. Also handles aspect-ratio resizing.",
     "page": "tools/timecode-calculator/",
     "url": "https://caprame.com/timecode-calculator/",
     "image": "images/timecode-calculator.jpg",

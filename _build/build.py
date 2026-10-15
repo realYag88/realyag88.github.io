@@ -25,6 +25,16 @@ def esc(s):
     return html.escape(s or "", quote=True)
 
 
+def esc_br(s):
+    """本文用。文中の改行はそのまま改行として表示する"""
+    return "<br>".join(esc(line) for line in (s or "").split("\n"))
+
+
+def one_line(s):
+    """meta description などは改行をつなげて1行に"""
+    return " ".join(x.strip() for x in (s or "").split("\n") if x.strip())
+
+
 def lang_pair(item, key):
     """(日本語, 英語)。英語が空なら日本語で埋める"""
     ja = item["ja"].get(key)
@@ -74,7 +84,7 @@ def build_tiles(section, items):
 
 # ---------------- 説明ページ ----------------
 def li(items):
-    return "\n".join(f"        <li>{esc(i)}</li>" for i in items)
+    return "\n".join(f"        <li>{esc_br(i)}</li>" for i in items)
 
 
 def section_html(title_ja, title_en, items_ja, items_en, ordered=False):
@@ -120,8 +130,8 @@ def page_html(section, it):
     after = ""
     if note:
         after = f"""
-    <p class="detail-note" data-lang-block="ja">{esc(note)}</p>
-    <p class="detail-note" data-lang-block="en">{esc(note_en)}</p>"""
+    <p class="detail-note" data-lang-block="ja">{esc_br(note)}</p>
+    <p class="detail-note" data-lang-block="en">{esc_br(note_en)}</p>"""
 
     spec_rows = []
     for key, kja, ken in (("env", "対応環境", "Works on"), ("language", "言語", "Language"),
@@ -130,8 +140,8 @@ def page_html(section, it):
         if vja:
             spec_rows.append(
                 f'        <dt data-en="{ken}">{kja}</dt>\n'
-                f'        <dd><span data-lang-block="ja">{esc(vja)}</span>'
-                f'<span data-lang-block="en">{esc(ven)}</span></dd>')
+                f'        <dd><span data-lang-block="ja">{esc_br(vja)}</span>'
+                f'<span data-lang-block="en">{esc_br(ven)}</span></dd>')
     spec = ""
     if spec_rows:
         spec = ('\n    <section class="detail-section">\n      <dl class="detail-spec">\n'
@@ -153,11 +163,11 @@ def page_html(section, it):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title data-en="{esc(title_en)} | caprame">{esc(title)} | カプラメー</title>
-  <meta name="description" content="{esc(lead)}">
+  <meta name="description" content="{esc(one_line(lead))}">
   <meta name="theme-color" content="#1b1a1f">
   <link rel="canonical" href="{url}">
   <meta property="og:title" content="{esc(title)} | カプラメー">
-  <meta property="og:description" content="{esc(lead)}">
+  <meta property="og:description" content="{esc(one_line(lead))}">
   <meta property="og:url" content="{url}">
   <meta property="og:type" content="website">{og}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -197,8 +207,8 @@ def page_html(section, it):
     <a class="back-link" href="{list_href}" data-en="← All {sec_label.lower()}">← {sec_label} 一覧</a>
 
     <h1 data-en="{esc(title_en)}">{esc(title)}</h1>
-    <p class="detail-lead" data-lang-block="ja">{esc(lead)}</p>
-    <p class="detail-lead" data-lang-block="en">{esc(lead_en)}</p>
+    <p class="detail-lead" data-lang-block="ja">{esc_br(lead)}</p>
+    <p class="detail-lead" data-lang-block="en">{esc_br(lead_en)}</p>
 {shot}
     <div class="detail-actions">
 {chr(10).join(btns)}

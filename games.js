@@ -6,9 +6,9 @@
 const GAMES = [
   {
     "title": "ローグライクサモンカードゲーム",
-    "desc": "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトル。階層を進みながらデッキを育てていきます。",
+    "desc": "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトル。",
     "title_en": "Roguelike Summon Card Game",
-    "desc_en": "A pixel-art roguelike card battler built on rock-paper-scissors matchups. Grow your deck as you descend floor by floor. (Japanese only)",
+    "desc_en": "A pixel-art roguelike card battler built on rock-paper-scissors matchups.",
     "page": "games/summon-card/",
     "url": "https://caprame.com/DotRoguelikeCardBattle/",
     "image": "images/summon-card.jpg",
