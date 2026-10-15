@@ -23,21 +23,21 @@ const TOOLS = [
   {
     title: "ストレッチループ",
     desc: "ストレッチの秒数をくり返し計る、ループ式のタイマー。",
-    url: "", // ← リポジトリ名がわかったら入れる
+    url: "https://caprame.com/stretch-loop/",
     image: "",
     color: "#24302e",
   },
   {
     title: "ベース練習帳",
     desc: "課題曲、YouTubeの区間ループ、基礎練、メトロノームをまとめたベース練習用アプリ。",
-    url: "", // ← リポジトリ名がわかったら入れる
+    url: "https://caprame.com/bass-practice/",
     image: "",
     color: "#332828",
   },
   {
     title: "筋トレログ",
     desc: "部位別のメニューとセットを記録できる筋トレ記録アプリ。体重やカレンダーも。",
-    url: "", // ← リポジトリ名がわかったら入れる
+    url: "https://caprame.com/kintore-log/",
     image: "",
     color: "#2a2833",
   },
