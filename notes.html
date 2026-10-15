@@ -48,15 +48,7 @@
 
   <main class="wrap">
     <div class="notes">
-      <div class="note-filter" role="group" aria-label="タグで絞り込む">
-        <button type="button" data-tag="" aria-pressed="true">All</button>
-        <button type="button" data-tag="CG Tips" aria-pressed="false">CG Tips</button>
-        <button type="button" data-tag="雑記" aria-pressed="false"><span data-en="Journal">雑記</span></button>
-      </div>
-      <ul class="note-list" id="note-list">
-
-      </ul>
-      <p class="note-empty" id="note-empty" hidden data-en="No posts yet.">まだ記事はありません。</p>
+      <p class="note-empty" data-en="No posts yet.">まだ記事はありません。</p>
     </div>
   </main>
 
@@ -67,35 +59,5 @@
     <span>© 2026 caprame. All rights reserved.</span>
   </footer>
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "991d75fb98894c599ec91ff6296ff0bf"}'></script><!-- End Cloudflare Web Analytics -->
-  <script>
-  /* タグの絞り込み。?tag=〇〇 付きで開くと最初からそのタグで絞り込む */
-  (function () {
-    var list = document.getElementById("note-list");
-    var empty = document.getElementById("note-empty");
-    var btns = document.querySelectorAll(".note-filter button");
-    function show(tag) {
-      var n = 0;
-      list.querySelectorAll("li").forEach(function (li) {
-        var hit = !tag || li.getAttribute("data-tags").split("|").indexOf(tag) >= 0;
-        li.hidden = !hit;
-        if (hit) n++;
-      });
-      empty.hidden = n > 0;
-      btns.forEach(function (b) {
-        b.setAttribute("aria-pressed", String((b.getAttribute("data-tag") || "") === (tag || "")));
-      });
-    }
-    btns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        var tag = b.getAttribute("data-tag") || "";
-        var u = new URL(location.href);
-        if (tag) u.searchParams.set("tag", tag); else u.searchParams.delete("tag");
-        history.replaceState(null, "", u);
-        show(tag);
-      });
-    });
-    show(new URL(location.href).searchParams.get("tag") || "");
-  })();
-  </script>
 </body>
 </html>

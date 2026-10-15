@@ -8,8 +8,9 @@ content.json から、タイル一覧(tools.js / games.js)と説明ページ(too
 ・external(note など)を付けた項目は説明ページを作らず、タイルから直接そのURLへ飛びます
 ・Notes(ブログ)の記事は _notes フォルダに置きます。書き方は _build/notes.py の先頭を見てください
 ・_build・_notes フォルダはサイトとしては公開されません(GitHub Pages は _ で始まるフォルダを無視します)
-・Markdown の変換に python の markdown、画像の撮影情報を消すのに Pillow を使います
-  (入っていなければ pip install markdown pillow)
+・Markdown の変換に python の markdown と PyYAML、画像の撮影情報を消すのに Pillow を使います
+  (入っていなければ pip install markdown pillow pyyaml)
+・記事をPages CMSで保存すると GitHub Actions(.github/workflows/build.yml)がこれを自動で実行します
 """
 import html
 import json

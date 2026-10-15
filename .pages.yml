@@ -1,0 +1,49 @@
+# Pages CMS(https://app.pagescms.org)の設定。Notes の記事をブラウザから書くためのもの。
+# 保存すると GitHub Actions が _build/build.py を実行して、数分でサイトに出る。
+
+media:
+  input: _notes/media
+  output: /notes/media
+  categories: [image, video]
+
+content:
+  - name: notes
+    label: Notes
+    type: collection
+    path: _notes
+    subfolders: false
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{hour}{minute}.md"
+    view:
+      primary: title
+      fields: [title, date, tags]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: タイトル
+        type: string
+        required: true
+      - name: date
+        label: 日付
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: tags
+        label: タグ
+        description: 例：CG Tips、雑記、After Effects、Blender。1つずつ追加します。
+        type: string
+        list: true
+      - name: description
+        label: 説明（省略可）
+        description: 一覧やSNSで出る説明。空なら本文の頭から自動で作ります。
+        type: text
+      - name: body
+        label: 本文
+        description: "YouTubeは1行に「@youtube URL」とだけ書くと埋め込まれます。"
+        type: rich-text
+        options:
+          format: markdown
+          rename: true

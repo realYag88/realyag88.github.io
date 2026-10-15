@@ -1,29 +1,31 @@
 """
 Notes(ブログ)のページを作ります。build.py から呼ばれるので、単体で実行する必要はありません。
+ふだんは Pages CMS(https://app.pagescms.org)で記事を書くと、GitHub Actions がこれを実行して公開します。
 
 ■ 記事の置き場所
-  _notes/記事名/index.md   … 本文
-  _notes/記事名/画像.jpg   … その記事で使う画像(本文から ![](画像.jpg) で参照)
-  画像がない記事は _notes/記事名.md の1ファイルでもかまいません。
-  「記事名」がそのまま URL になります(caprame.com/notes/記事名/)。英数字とハイフンで。
+  _notes/〇〇.md           … Pages CMS で書いた記事(ファイル名は日時から自動で付く)
+  _notes/media/            … Pages CMS で貼った画像
+  _notes/〇〇/index.md     … 画像を記事と同じフォルダに置く書き方(手で置く時用)
+  ファイル名(フォルダ名)がそのまま URL になります(caprame.com/notes/〇〇/)。
 
-■ 本文の先頭に書く項目
+■ 記事の先頭の項目(Pages CMS の入力欄と同じ)
   ---
   title: 記事のタイトル
   date: 2026-10-15
-  tags: CG Tips, After Effects
+  tags:
+    - CG Tips
+    - After Effects
   description: 一覧やSNSで出る説明(省略すると本文の頭から自動で作る)
-  draft: true      ← 書いている途中の記事。付けている間は公開されない
   ---
 
-■ 本文の書き方(Markdown)
-  ・改行はそのまま改行になる。段落を分けるときは空行を入れる
-  ・## 見出し / - 箇条書き / 1. 番号付き / **太字** / `コード` / ```で囲んだコード
-  ・画像: ![説明](画像.jpg) 。 ![説明](画像.jpg "キャプション") でキャプション付き
-  ・YouTube: 行に @youtube https://www.youtube.com/watch?v=xxxx とだけ書く
-  ・画像は書き出すときに撮影情報(EXIF)を消してから公開フォルダへコピーする
+■ 本文(Markdown)
+  ・改行はそのまま改行になる。段落を分ける時は空行を入れる
+  ・YouTube: 1行に @youtube https://www.youtube.com/watch?v=xxxx とだけ書く
+  ・画像は書き出す時に撮影情報(EXIF)を消してから公開フォルダへコピーする
+    (_notes/media の元画像からも消す)
+  ・一覧のサムネイルには本文の最初の画像を使う
 
-■ _ で始まるファイル・フォルダ(_template.md など)は記事として扱わない
+■ 消した記事のページ(notes/〇〇/)は次の組み立てで自動的に消える
 """
 import datetime
 import html
@@ -33,6 +35,7 @@ import shutil
 from urllib.parse import parse_qs, quote, urlparse
 
 import markdown
+import yaml
 
 try:
     from PIL import Image, ImageOps
@@ -41,12 +44,13 @@ except ImportError:  # Pillow がなければ EXIF を消さずにコピーし�
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "_notes")
+MEDIA_SRC = os.path.join(SRC, "media")
 OUT = os.path.join(ROOT, "notes")
+MEDIA_OUT = os.path.join(OUT, "media")
 SITE = "https://caprame.com"
+PER_PAGE = 10  # 一覧の1ページに出す記事数
 
-# 一覧の絞り込みボタンに最初から出すタグ(この順に並ぶ。ほかのタグは記事数の多い順に後ろへ)
-FIXED_TAGS = ["CG Tips", "雑記"]
-# 英語表示のときのタグ名(ここにないタグはそのまま)
+# 英語表示の時のタグ名(ここにないタグはそのまま)
 TAG_EN = {"雑記": "Journal"}
 
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp"}
@@ -59,27 +63,50 @@ def esc(s):
 
 # ---------------- 読み込み ----------------
 def parse_front(text):
-    meta = {}
+    text = text.lstrip("﻿")
     if text.startswith("---"):
-        parts = text.split("\n")
-        end = None
-        for i in range(1, len(parts)):
-            if parts[i].strip() == "---":
-                end = i
-                break
-        if end:
-            for line in parts[1:end]:
-                if ":" in line:
-                    k, v = line.split(":", 1)
-                    meta[k.strip().lower()] = v.strip()
-            text = "\n".join(parts[end + 1:])
-    return meta, text
+        m = re.match(r"---[ \t]*\r?\n(.*?)\r?\n---[ \t]*(?:\r?\n|$)", text, re.S)
+        if m:
+            meta = yaml.safe_load(m.group(1)) or {}
+            return (meta if isinstance(meta, dict) else {}), text[m.end():]
+    return {}, text
+
+
+def to_date(v):
+    if isinstance(v, datetime.datetime):
+        return v.date()
+    if isinstance(v, datetime.date):
+        return v
+    s = str(v or "").strip()
+    try:
+        return datetime.date.fromisoformat(s[:10])
+    except ValueError:
+        return None
+
+
+def to_tags(v):
+    if isinstance(v, list):
+        items = v
+    else:
+        items = str(v or "").replace("、", ",").split(",")
+    out = []
+    for t in items:
+        t = str(t or "").strip()
+        if t and t not in out:
+            out.append(t)
+    return out
+
+
+def make_slug(name, date):
+    s = re.sub(r"[^a-z0-9-]+", "-", name.lower()).strip("-")
+    s = re.sub(r"-{2,}", "-", s)
+    return s or date.isoformat()
 
 
 def youtube_embed(url):
     u = urlparse(url.strip())
     vid = ""
-    if u.hostname in ("youtu.be",):
+    if u.hostname == "youtu.be":
         vid = u.path.lstrip("/")
     elif u.hostname and "youtube" in u.hostname:
         if u.path.startswith(("/shorts/", "/embed/", "/live/")):
@@ -95,42 +122,57 @@ def youtube_embed(url):
             f'picture-in-picture; fullscreen" allowfullscreen></iframe></div>')
 
 
-def render_body(md_text):
-    lines = []
+def preprocess(md_text):
+    """@youtube の行を埋め込みにし、エディタが付ける行末の \\ (改行の印)を外す"""
+    lines, in_code = [], False
     for line in md_text.split("\n"):
-        m = re.match(r"^\s*@youtube\s+(\S+)\s*$", line)
-        if m:
-            emb = youtube_embed(m.group(1))
-            if emb:
-                lines += ["", emb, ""]
-                continue
-            print("  ! YouTube のURLが読めませんでした:", m.group(1))
+        if line.lstrip().startswith("```"):
+            in_code = not in_code
+        if not in_code:
+            if re.match(r"^\s*\\?@youtube\b", line):
+                m = re.search(r"https?://[^\s)\]>]+", line.replace("\\", ""))
+                emb = youtube_embed(m.group(0)) if m else None
+                if emb:
+                    lines += ["", emb, ""]
+                    continue
+                print("  ! YouTube のURLが読めませんでした:", line.strip())
+            line = re.sub(r"(?<!\\)\\$", "", line)
         lines.append(line)
-    body = markdown.markdown("\n".join(lines),
+    return "\n".join(lines)
+
+
+def render_body(md_text, slug):
+    body = markdown.markdown(preprocess(md_text),
                              extensions=["fenced_code", "tables", "sane_lists", "nl2br"],
                              output_format="html")
-    # 画像は遅延読み込み。title 付きの画像だけの段落はキャプション付きの図にする
-    body = body.replace("<img ", '<img loading="lazy" decoding="async" ')
 
+    # 相対パスの画像は記事のフォルダを指すように
+    def fix_src(m):
+        src = m.group(1)
+        if not re.match(r"(https?:)?/", src):
+            src = f"/notes/{slug}/{src}"
+        return f'<img loading="lazy" decoding="async" src="{src}"'
+    body = re.sub(r'<img src="([^"]*)"', fix_src, body)
+
+    # 画像だけの段落は図にする(title があればキャプション)
     def to_figure(m):
         img = m.group(1)
         cap = re.search(r'title="([^"]*)"', img)
-        if not cap:
-            return m.group(0)
-        img = re.sub(r'\s*title="[^"]*"', "", img)
-        return f"<figure>{img}<figcaption>{cap.group(1)}</figcaption></figure>"
+        if cap:
+            img = re.sub(r'\s*title="[^"]*"', "", img)
+            return f"<figure>{img}<figcaption>{cap.group(1)}</figcaption></figure>"
+        return f"<figure>{img}</figure>"
     body = re.sub(r"<p>(<img [^>]*>)</p>", to_figure, body)
-    body = re.sub(r"<p>(<img [^>]*>)</p>", r"<figure>\1</figure>", body)
     # 外部リンクは新しいタブで開く
     body = re.sub(r'<a href="(https?://(?!caprame\.com)[^"]*)"',
                   r'<a href="\1" target="_blank" rel="noopener"', body)
-    # 表は横にスクロールできる枠に入れる(スマホで画面からはみ出さないように)
+    # 表は横にスクロールできる枠に入れる
     body = body.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
     return body
 
 
-def plain_text(body_html, n=110):
-    t = re.sub(r"<(pre|figure|div class=\"embed\")[\s\S]*?</(pre|figure|div)>", " ", body_html)
+def plain_text(body_html, n=140):
+    t = re.sub(r'<(pre|figure|div class="embed")[\s\S]*?</(pre|figure|div)>', " ", body_html)
     t = html.unescape(re.sub(r"<[^>]+>", " ", t))
     t = re.sub(r"\s+", " ", t).strip()
     return t if len(t) <= n else t[:n].rstrip() + "…"
@@ -141,69 +183,89 @@ def load_posts():
     if not os.path.isdir(SRC):
         return posts
     for name in sorted(os.listdir(SRC)):
-        if name.startswith((".", "_")):
+        if name.startswith((".", "_")) or name == "media":
             continue
         path = os.path.join(SRC, name)
         if os.path.isdir(path):
-            md_path, slug, asset_dir = os.path.join(path, "index.md"), name, path
+            md_path, base, asset_dir = os.path.join(path, "index.md"), name, path
             if not os.path.exists(md_path):
                 continue
         elif name.endswith(".md"):
-            md_path, slug, asset_dir = path, name[:-3], None
+            md_path, base, asset_dir = path, name[:-3], None
         else:
-            continue
-        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-            print(f"  ! 記事名は英小文字・数字・ハイフンだけにしてください(スキップ): {name}")
             continue
         with open(md_path, encoding="utf-8") as f:
             meta, text = parse_front(f.read())
-        if meta.get("draft", "").lower() in ("true", "yes", "1"):
-            print(f"  - 下書きのため公開しません: {slug}")
+        date = to_date(meta.get("date"))
+        if not date:
+            print(f"  ! 日付が読めないためスキップしました: {name}")
             continue
-        try:
-            date = datetime.date.fromisoformat(meta.get("date", ""))
-        except ValueError:
-            print(f"  ! date が読めません(2026-10-15 の形で書いてください)。スキップ: {slug}")
-            continue
-        title = meta.get("title") or slug
-        tags = [t.strip() for t in meta.get("tags", "").replace("、", ",").split(",") if t.strip()]
-        body = render_body(text)
+        slug = make_slug(base, date)
+        body = render_body(text, slug)
         first_img = re.search(r'<img [^>]*src="([^"]+)"', body)
         posts.append({
-            "slug": slug, "title": title, "date": date, "tags": tags, "body": body,
-            "desc": meta.get("description") or plain_text(body),
+            "slug": slug, "title": str(meta.get("title") or base), "date": date,
+            "tags": to_tags(meta.get("tags")), "body": body,
+            "desc": str(meta.get("description") or "").strip() or plain_text(body),
             "image": first_img.group(1) if first_img else "",
             "asset_dir": asset_dir,
         })
+    seen = set()
+    for p in posts:  # 同じ URL になった記事は後ろに番号を付ける
+        s, i = p["slug"], 2
+        while p["slug"] in seen:
+            p["slug"], i = f"{s}-{i}", i + 1
+        seen.add(p["slug"])
     posts.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
     return posts
 
 
 # ---------------- 画像のコピー(EXIF を消す) ----------------
-def copy_assets(post, out_dir):
-    src = post["asset_dir"]
-    if not src:
-        return
-    for name in os.listdir(src):
+def has_meta(path):
+    try:
+        with Image.open(path) as im:
+            return bool(im.getexif()) or any(k in im.info for k in ("exif", "xmp", "XML:com.adobe.xmp"))
+    except Exception:
+        return False
+
+
+def strip_save(src, dst):
+    with Image.open(src) as im:
+        im = ImageOps.exif_transpose(im)  # 向きを反映してから情報を消す
+        im.info.clear()
+        if os.path.splitext(src)[1].lower() in (".jpg", ".jpeg"):
+            im.convert("RGB").save(dst, quality=92, optimize=True)
+        else:
+            im.save(dst, optimize=True)
+
+
+def sync_files(src_dir, out_dir, clean_source=False):
+    """src_dir の画像などを out_dir へ。out_dir にあって src_dir にないものは消す"""
+    os.makedirs(out_dir, exist_ok=True)
+    wanted = set()
+    for name in sorted(os.listdir(src_dir)):
+        a = os.path.join(src_dir, name)
         ext = os.path.splitext(name)[1].lower()
-        if name.startswith((".", "_")) or ext not in COPY_EXT:
+        if name.startswith(".") or not os.path.isfile(a) or ext not in COPY_EXT:
             continue
-        a, b = os.path.join(src, name), os.path.join(out_dir, name)
+        wanted.add(name)
+        b = os.path.join(out_dir, name)
         if ext in IMAGE_EXT and Image is not None:
-            with Image.open(a) as im:
-                im = ImageOps.exif_transpose(im)  # 向きを反映してから情報を消す
-                im.info.clear()
-                if ext in (".jpg", ".jpeg"):
-                    im.convert("RGB").save(b, quality=92, optimize=True)
-                else:
-                    im.save(b, optimize=True)
+            if clean_source and has_meta(a):
+                strip_save(a, a)
+                print(f"  - 撮影情報を消しました: {os.path.relpath(a, ROOT)}")
+            strip_save(a, b)
         else:
             if ext in IMAGE_EXT:
                 print(f"  ! Pillow がないため撮影情報を消さずにコピーしました: {name}")
             shutil.copyfile(a, b)
+    for name in os.listdir(out_dir):
+        p = os.path.join(out_dir, name)
+        if os.path.isfile(p) and name not in wanted and name != "index.html":
+            os.remove(p)
 
 
-# ---------------- ページ ----------------
+# ---------------- 部品 ----------------
 def tag_label(t):
     return f'<span data-en="{esc(TAG_EN.get(t, t))}">{esc(t)}</span>' if t in TAG_EN else esc(t)
 
@@ -239,48 +301,97 @@ def head(title_ja, title_en, desc, url, og_type="website", image="", content_lan
 """
 
 
-def list_item(p):
+def card(p):
     tags = "".join(f'<span class="note-tag">{tag_label(t)}</span>' for t in p["tags"])
+    thumb = ""
+    if p["image"]:
+        thumb = f'\n            <img class="note-thumb" src="{esc(p["image"])}" alt="" loading="lazy" decoding="async">'
     return f"""        <li data-tags="{esc('|'.join(p['tags']))}">
-          <a class="note-row" href="/notes/{p['slug']}/">
-            <time datetime="{p['date'].isoformat()}">{date_str(p['date'])}</time>
-            <span class="note-title">{esc(p['title'])}</span>
-            <span class="note-tags">{tags}</span>
+          <a class="note-card{' has-thumb' if thumb else ''}" href="/notes/{p['slug']}/">
+            <span class="note-card-text">
+              <time datetime="{p['date'].isoformat()}">{date_str(p['date'])}</time>
+              <span class="note-title">{esc(p['title'])}</span>
+              <span class="note-excerpt">{esc(p['desc'])}</span>
+              <span class="note-tags">{tags}</span>
+            </span>{thumb}
           </a>
         </li>"""
 
 
-FILTER_JS = """  <script>
-  /* タグの絞り込み。?tag=〇〇 付きで開くと最初からそのタグで絞り込む */
+LIST_JS = """  <script>
+  /* タグの絞り込みとページ送り。?tag=〇〇&page=2 のように開くとその状態で表示する */
   (function () {
+    var PER = %d;
     var list = document.getElementById("note-list");
-    var empty = document.getElementById("note-empty");
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll("li"));
+    var pager = document.getElementById("note-pager");
     var btns = document.querySelectorAll(".note-filter button");
-    function show(tag) {
-      var n = 0;
-      list.querySelectorAll("li").forEach(function (li) {
-        var hit = !tag || li.getAttribute("data-tags").split("|").indexOf(tag) >= 0;
-        li.hidden = !hit;
-        if (hit) n++;
+    var state = { tag: "", page: 1 };
+
+    function en() { return window.caprameLang && window.caprameLang() === "en"; }
+
+    function read() {
+      var q = new URL(location.href).searchParams;
+      state.tag = q.get("tag") || "";
+      state.page = Math.max(1, parseInt(q.get("page"), 10) || 1);
+    }
+    function write() {
+      var u = new URL(location.href);
+      if (state.tag) u.searchParams.set("tag", state.tag); else u.searchParams.delete("tag");
+      if (state.page > 1) u.searchParams.set("page", state.page); else u.searchParams.delete("page");
+      history.replaceState(null, "", u);
+    }
+
+    function pageBtn(label, page, opts) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      if (opts.current) b.setAttribute("aria-current", "page");
+      if (opts.disabled) b.disabled = true;
+      if (opts.label) b.setAttribute("aria-label", opts.label);
+      b.addEventListener("click", function () {
+        state.page = page; write(); draw();
+        list.scrollIntoView({ block: "start" });
       });
-      empty.hidden = n > 0;
+      return b;
+    }
+
+    function draw() {
+      var hits = items.filter(function (li) {
+        return !state.tag || li.getAttribute("data-tags").split("|").indexOf(state.tag) >= 0;
+      });
+      var pages = Math.max(1, Math.ceil(hits.length / PER));
+      if (state.page > pages) state.page = pages;
+      var from = (state.page - 1) * PER;
+      items.forEach(function (li) { li.hidden = true; });
+      hits.slice(from, from + PER).forEach(function (li) { li.hidden = false; });
+
+      pager.textContent = "";
+      pager.hidden = pages < 2;
+      if (pages > 1) {
+        pager.appendChild(pageBtn(en() ? "← Prev" : "← 前へ", state.page - 1, { disabled: state.page === 1 }));
+        for (var i = 1; i <= pages; i++) {
+          pager.appendChild(pageBtn(String(i), i, { current: i === state.page, label: (en() ? "Page " : "ページ ") + i }));
+        }
+        pager.appendChild(pageBtn(en() ? "Next →" : "次へ →", state.page + 1, { disabled: state.page === pages }));
+      }
       btns.forEach(function (b) {
-        b.setAttribute("aria-pressed", String((b.getAttribute("data-tag") || "") === (tag || "")));
+        b.setAttribute("aria-pressed", String((b.getAttribute("data-tag") || "") === state.tag));
       });
     }
+
     btns.forEach(function (b) {
       b.addEventListener("click", function () {
-        var tag = b.getAttribute("data-tag") || "";
-        var u = new URL(location.href);
-        if (tag) u.searchParams.set("tag", tag); else u.searchParams.delete("tag");
-        history.replaceState(null, "", u);
-        show(tag);
+        state.tag = b.getAttribute("data-tag") || "";
+        state.page = 1; write(); draw();
       });
     });
-    show(new URL(location.href).searchParams.get("tag") || "");
+    document.addEventListener("caprame:langchange", draw);
+    read(); draw();
   })();
   </script>
-"""
+""" % PER_PAGE
 
 
 def list_page(posts, header_html, footer):
@@ -288,11 +399,30 @@ def list_page(posts, header_html, footer):
     for p in posts:
         for t in p["tags"]:
             counts[t] = counts.get(t, 0) + 1
-    tags = FIXED_TAGS + sorted((t for t in counts if t not in FIXED_TAGS), key=lambda t: (-counts[t], t))
-    btns = ['        <button type="button" data-tag="" aria-pressed="true">All</button>']
-    btns += [f'        <button type="button" data-tag="{esc(t)}" aria-pressed="false">{tag_label(t)}</button>'
-             for t in tags]
-    items = "\n".join(list_item(p) for p in posts)
+    tags = sorted(counts, key=lambda t: (-counts[t], t))
+
+    if posts:
+        items = "\n".join(card(p) for p in posts)
+        listing = f"""      <ul class="note-cards" id="note-list">
+{items}
+      </ul>
+      <nav class="note-pager" id="note-pager" aria-label="ページ送り" hidden></nav>"""
+    else:
+        listing = '      <p class="note-empty" data-en="No posts yet.">まだ記事はありません。</p>'
+
+    filt = ""
+    if tags:
+        btns = ['          <button type="button" data-tag="" aria-pressed="true">All</button>']
+        btns += [f'          <button type="button" data-tag="{esc(t)}" aria-pressed="false">{tag_label(t)}'
+                 f'<span class="note-count">{counts[t]}</span></button>' for t in tags]
+        filt = f"""
+      <section class="note-filter-wrap">
+        <h2 data-en="Tags">タグ</h2>
+        <div class="note-filter" role="group" aria-label="タグで絞り込む">
+{chr(10).join(btns)}
+        </div>
+      </section>"""
+
     return (head("Notes", "Notes", "CGのtipsと雑記。", f"{SITE}/notes.html")
             + header_html("notes", page_is_list=True)
             + f"""
@@ -300,29 +430,22 @@ def list_page(posts, header_html, footer):
 
   <main class="wrap">
     <div class="notes">
-      <div class="note-filter" role="group" aria-label="タグで絞り込む">
-{chr(10).join(btns)}
-      </div>
-      <ul class="note-list" id="note-list">
-{items}
-      </ul>
-      <p class="note-empty" id="note-empty" hidden data-en="No posts yet.">まだ記事はありません。</p>
+{listing}{filt}
     </div>
   </main>
 
-""" + footer + FILTER_JS + "</body>\n</html>\n")
+""" + footer + (LIST_JS if posts else "") + "</body>\n</html>\n")
 
 
 def related(post, posts, n=3):
-    same = [p for p in posts if p is not post and set(p["tags"]) & set(post["tags"])]
-    return same[:n]
+    return [p for p in posts if p is not post and set(p["tags"]) & set(post["tags"])][:n]
 
 
 def post_page(post, posts, header_html, footer):
     url = f"{SITE}/notes/{post['slug']}/"
     image = post["image"]
-    if image and not image.startswith("http"):
-        image = f"{SITE}/notes/{post['slug']}/{image}" if not image.startswith("/") else SITE + image
+    if image.startswith("/"):
+        image = SITE + image
     tags = "".join(f'<a class="note-tag" href="/notes.html?tag={quote(t)}">{tag_label(t)}</a>'
                    for t in post["tags"])
     rel = related(post, posts)
@@ -331,8 +454,8 @@ def post_page(post, posts, header_html, footer):
         rel_html = f"""
       <section class="note-related">
         <h2 data-en="Related">関連する記事</h2>
-        <ul class="note-list">
-{chr(10).join(list_item(p) for p in rel)}
+        <ul class="note-cards">
+{chr(10).join(card(p) for p in rel)}
         </ul>
       </section>"""
     return (head(post["title"], post["title"], post["desc"], url, "article", image, content_lang=True)
@@ -348,8 +471,7 @@ def post_page(post, posts, header_html, footer):
       </p>
       <div class="prose" lang="ja">
 {post['body']}
-      </div>
-{rel_html}
+      </div>{rel_html}
       <a class="back-link note-back" href="/notes.html" data-en="← All notes">← Notes 一覧</a>
     </article>
   </main>
@@ -358,17 +480,29 @@ def post_page(post, posts, header_html, footer):
 
 
 def build(header_html, footer):
-    """記事一覧(notes.html)と各記事(notes/記事名/)を作る。記事の URL の一覧を返す"""
+    """記事一覧(notes.html)と各記事(notes/〇〇/)を作る。記事の URL の一覧を返す"""
     posts = load_posts()
     os.makedirs(OUT, exist_ok=True)
+
+    # 共通の画像フォルダ
+    if os.path.isdir(MEDIA_SRC):
+        sync_files(MEDIA_SRC, MEDIA_OUT, clean_source=True)
+    elif os.path.isdir(MEDIA_OUT):
+        shutil.rmtree(MEDIA_OUT)
+
+    # 元の記事がなくなったページは消す
     slugs = {p["slug"] for p in posts}
     for name in os.listdir(OUT):
-        if os.path.isdir(os.path.join(OUT, name)) and name not in slugs:
-            print(f"  ! notes/{name}/ は元の記事がありません(下書きにした・名前を変えた場合は消してください)")
+        d = os.path.join(OUT, name)
+        if os.path.isdir(d) and name != "media" and name not in slugs:
+            shutil.rmtree(d)
+            print(f"  - 元の記事がないので消しました: notes/{name}/")
+
     for p in posts:
         d = os.path.join(OUT, p["slug"])
         os.makedirs(d, exist_ok=True)
-        copy_assets(p, d)
+        if p["asset_dir"]:
+            sync_files(p["asset_dir"], d, clean_source=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(post_page(p, posts, header_html, footer))
         print("wrote", f"notes/{p['slug']}/")
