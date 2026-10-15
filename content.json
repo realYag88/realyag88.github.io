@@ -1,0 +1,359 @@
+{
+  "_readme": "カプラメーの文面データ。ここを直して python3 _build/build.py を実行すると、タイル一覧と説明ページが作り直されます。英語(en)が空のときは日本語がそのまま表示されます。note など外部に飛ばす項目は、\"external\": \"note\" と \"url\": 記事のアドレス を書くと、説明ページを作らず新しいタブで開きます。",
+  "tools": [
+    {
+      "slug": "film-study-viewer",
+      "url": "https://caprame.com/FilmStudyViewer/",
+      "image": "film-study-viewer.jpg",
+      "color": "#2a2e38",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/FilmStudyViewer/",
+          "ja": "開く",
+          "en": "Open"
+        }
+      ],
+      "ja": {
+        "title": "Film study viewer",
+        "tile": "参考画像を一定時間ごとに切り替えるクロッキー練習用のスライドショー。分割線を表示できる。",
+        "lead": "参考画像を決めた秒数ごとに切り替えて表示する、クロッキー練習用のスライドショーです。",
+        "when": [
+          "映画のスクショや写真を使って、短時間のドローイング練習をしたいとき",
+          "構図の勉強のために、分割線を重ねて画面を見たいとき"
+        ],
+        "howto": [
+          "「画像を追加」で参考画像を選びます(複数枚まとめて選べます)",
+          "設定で表示時間・順番かランダムか・比率などを決めます",
+          "画面をタップで再生/一時停止、左右にスワイプで前後の画像に移ります"
+        ],
+        "features": [
+          "残り時間のゲージ表示",
+          "比率の切り替え(1:1、16:9、A判・B判、カスタムなど)",
+          "分割線(枠・交差線・対角線)。透明度と太さを調整できます",
+          "ダブルタップで、画像とゲージだけの表示に切り替え",
+          "ホーム画面に追加して、アプリのように使えます"
+        ],
+        "env": "iPhone / Android のブラウザ",
+        "data": "追加した画像はこの端末のブラウザの中だけに保存されます。どこかに送信されることはありません。"
+      },
+      "en": {
+        "title": "Film study viewer",
+        "tile": "A slideshow for croquis practice that switches reference images on a timer, with composition guide overlays. (Japanese UI)",
+        "lead": "A slideshow for croquis practice that switches reference images on a timer.",
+        "when": [
+          "Timed drawing practice using film stills or photos",
+          "Studying composition with guide lines over the image"
+        ],
+        "howto": [
+          "Tap “画像を追加” (Add images) and pick your references",
+          "Set the duration, order or shuffle, and aspect ratio in settings",
+          "Tap to play/pause, swipe left or right to move between images"
+        ],
+        "features": [
+          "Remaining-time gauge",
+          "Aspect ratio presets (1:1, 16:9, A/B paper sizes, custom)",
+          "Guide lines (frame, cross, diagonals) with adjustable opacity and width",
+          "Double-tap for an image-and-gauge-only view",
+          "Add to your home screen to use it like an app"
+        ],
+        "env": "Browsers on iPhone / Android",
+        "data": "Images you add are stored only in this device's browser and are never uploaded."
+      }
+    },
+    {
+      "slug": "stretch-loop",
+      "url": "https://caprame.com/stretch-loop/",
+      "image": "stretch-loop.jpg",
+      "color": "#24302e",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/stretch-loop/",
+          "ja": "開く",
+          "en": "Open"
+        }
+      ],
+      "ja": {
+        "title": "ストレッチループ",
+        "tile": "ストレッチの秒数をくり返し計るループ式のタイマー。",
+        "lead": "ストレッチの秒数をくり返し計る、ループ式のタイマーです。",
+        "when": [
+          "左右30秒ずつなど、同じ秒数を何度もくり返してストレッチしたいとき",
+          "広告の出ないシンプルなタイマーがほしいとき"
+        ],
+        "howto": [
+          "「ラップ設定」で1回ぶんの秒数を決めます。ラップは追加できます",
+          "画面をタップするとスタート。ラップを順番にくり返します",
+          "「リセット」で最初に戻ります"
+        ],
+        "features": [
+          "複数のラップを順番にループ",
+          "いま何周目か・何番目のラップかを表示",
+          "よく使うラップの組み合わせを保存",
+          "ホーム画面に追加して、アプリのように使えます"
+        ],
+        "env": "スマホ・PCのブラウザ",
+        "data": "設定はこの端末のブラウザの中に保存されます。"
+      },
+      "en": {
+        "title": "Stretch Loop",
+        "tile": "A looping interval timer for stretching. (Japanese UI)",
+        "lead": "A looping interval timer for stretching.",
+        "when": [
+          "Repeating the same intervals, such as 30 seconds per side",
+          "When you just want a simple timer with no ads"
+        ],
+        "howto": [
+          "Set the length of each lap in the lap settings (you can add more laps)",
+          "Tap the screen to start; the laps repeat in order",
+          "Tap reset to start over"
+        ],
+        "features": [
+          "Loops through several laps in order",
+          "Shows the current round and lap",
+          "Save your favorite lap combinations",
+          "Add to your home screen to use it like an app"
+        ],
+        "env": "Phone and desktop browsers",
+        "data": "Settings are saved in this device's browser."
+      }
+    },
+    {
+      "slug": "bass-practice",
+      "url": "https://caprame.com/bass-practice/",
+      "image": "bass-practice.jpg",
+      "color": "#332828",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/bass-practice/",
+          "ja": "開く",
+          "en": "Open"
+        }
+      ],
+      "ja": {
+        "title": "ベース練習帳",
+        "tile": "課題曲、YouTubeの区間ループ、基礎練、メトロノームをまとめたベース練習用webアプリ",
+        "lead": "課題曲、YouTubeの区間ループ、基礎練メニュー、メトロノームをまとめた、ベース練習用のWebアプリです。",
+        "when": [
+          "練習したい曲と参考動画を、ひとまとめにしておきたいとき",
+          "動画の難しいところだけをくり返し聴きたいとき"
+        ],
+        "howto": [
+          "「曲を追加」で課題曲と練習用のYouTube動画を登録します",
+          "動画の区間ループや速度変更で、難しいところをくり返し練習します",
+          "基礎練メニューとメトロノームも同じアプリの中で使えます"
+        ],
+        "features": [
+          "YouTubeの区間ループ・速度変更・ブックマーク",
+          "基礎練メニューをカテゴリ分けして管理",
+          "メトロノーム(拍子・刻み・タップでテンポ指定・曲のBPMから設定)",
+          "データの書き出し・読み込み(JSON)"
+        ],
+        "env": "スマホ・PCのブラウザ",
+        "data": "データはこの端末のブラウザの中に保存されます。PCとスマホで移すときは、片方で書き出してもう片方で読み込んでください。"
+      },
+      "en": {
+        "title": "Bass Practice Notebook",
+        "tile": "A bass practice web app with a song list, YouTube A–B looping, basic drills and a metronome. (Japanese UI)",
+        "lead": "A bass practice web app with a song list, YouTube A–B looping, basic drills and a metronome.",
+        "when": [
+          "Keeping your practice songs and reference videos in one place",
+          "Looping just the tricky part of a video"
+        ],
+        "howto": [
+          "Add a song along with a YouTube video to practice with",
+          "Use A–B looping and playback speed to drill the hard parts",
+          "Basic drills and the metronome live in the same app"
+        ],
+        "features": [
+          "YouTube A–B looping, speed control and bookmarks",
+          "Basic drills organized by category",
+          "Metronome with time signature, subdivision, tap tempo and per-song BPM",
+          "Export and import your data as JSON"
+        ],
+        "env": "Phone and desktop browsers",
+        "data": "Data is saved in this device's browser. To move it between devices, export on one and import on the other."
+      }
+    },
+    {
+      "slug": "kintore-log",
+      "url": "https://caprame.com/kintore-log/",
+      "image": "kintore-log.jpg",
+      "color": "#2a2833",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/kintore-log/",
+          "ja": "開く",
+          "en": "Open"
+        }
+      ],
+      "ja": {
+        "title": "筋トレログ",
+        "tile": "部位別のメニューとセットを記録できる筋トレ記録アプリ。体重やカレンダーも搭載。",
+        "lead": "部位別のメニューとセットを記録できる、筋トレの記録アプリです。体重の記録やカレンダーもあります。",
+        "when": [
+          "ジムや自宅でのトレーニングを、セット単位で残しておきたいとき",
+          "体重や体脂肪率の変化をあわせて見たいとき"
+        ],
+        "howto": [
+          "「メニュー」で部位ごとに種目を登録します",
+          "トレーニングした日に、セットごとの重さ・回数を記録します",
+          "カレンダーやグラフで、これまでの記録を振り返ります"
+        ],
+        "features": [
+          "部位ごとのメニュー登録",
+          "セットごとに重さ・回数・補助を記録",
+          "カレンダーでトレーニングした日を確認",
+          "体重・体脂肪率のグラフ",
+          "ストレッチ用のタイマーつき",
+          "データの書き出し・読み込み(JSON)"
+        ],
+        "env": "スマホ・PCのブラウザ",
+        "data": "記録はこの端末のブラウザの中に保存されます。機種変更やブラウザのデータ削除で消えないよう、ときどき書き出しておくのがおすすめです。"
+      },
+      "en": {
+        "title": "Workout Log",
+        "tile": "A workout tracker for logging exercises and sets by muscle group, with body weight and a calendar. (Japanese UI)",
+        "lead": "A workout tracker for logging exercises and sets by muscle group, with body weight and a calendar.",
+        "when": [
+          "Logging gym or home workouts set by set",
+          "Tracking body weight and body fat alongside your training"
+        ],
+        "howto": [
+          "Register exercises for each muscle group in the menu tab",
+          "Log the weight and reps of each set on the day you train",
+          "Look back with the calendar and charts"
+        ],
+        "features": [
+          "Exercises organized by muscle group",
+          "Weight, reps and assistance logged per set",
+          "Calendar of training days",
+          "Body weight and body fat charts",
+          "Built-in stretching timer",
+          "Export and import your data as JSON"
+        ],
+        "env": "Phone and desktop browsers",
+        "data": "Records are saved in this device's browser. Export them now and then so they aren't lost when you change phones or clear browser data."
+      }
+    },
+    {
+      "slug": "timecode-calculator",
+      "url": "https://caprame.com/timecode-calculator/",
+      "image": "timecode-calculator.jpg",
+      "color": "#2b2620",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "/timecode-calculator/",
+          "ja": "Web版を開く",
+          "en": "Open web version"
+        },
+        {
+          "kind": "download",
+          "href": "https://github.com/realYag88/timecode-calculator/releases/latest/download/TimeCodeCalculator.exe",
+          "ja": "Windows版をダウンロード(.exe)",
+          "en": "Download for Windows (.exe)"
+        }
+      ],
+      "ja": {
+        "title": "TimeCode Calculator",
+        "tile": "フレーム数と24fps・30fpsのタイムコードを換算できる電卓。解像度の縦横比計算も。Web版とWindows版あり。",
+        "lead": "フレーム数と24fps・30fpsのタイムコードを相互に換算できる電卓です。解像度の縦横比計算もできます。",
+        "when": [
+          "カットの尺を、フレーム数と秒+コマで行き来したいとき",
+          "24fpsと30fpsで尺がどう変わるか確かめたいとき",
+          "素材を縦横比を保ったままリサイズしたいとき"
+        ],
+        "howto": [
+          "数字を入力して表示部をクリック(タップ)すると、FRAME → 24FPS → 30FPS の順に換算されます",
+          "タイムコードは右から詰めて入力します。「210」と打つと2秒10コマです",
+          "普通の電卓としても使えます。24FPS・30FPSのときの足し算・引き算は、そのままタイムコードの計算になります",
+          "「解像度」タブでは、元サイズと変換後の幅か高さを入れると、もう一方がすぐに出ます(端数は切り上げ)"
+        ],
+        "features": [
+          "キーボード操作:Enter=「=」/ Esc=C / Delete=CE / Backspace=1文字消す / Tab=モード切替",
+          "Web版は Alt+1・Alt+2 でタブ切替(Windows版は Ctrl+Tab)",
+          "解像度タブの元サイズは、次に開いたときも残ります"
+        ],
+        "env": "Web版:スマホ・PCのブラウザ / Windows版:Windows 10・11",
+        "data": "Web版は元サイズの設定だけをこの端末のブラウザに保存します。",
+        "note": "Windows版はインストール不要で、ダウンロードしたexeをダブルクリックするだけで使えます。初めて開くときに「WindowsによってPCが保護されました」と出た場合は、「詳細情報」→「実行」を押してください(個人で作ったアプリに署名がないために出る表示です)。"
+      },
+      "en": {
+        "title": "TimeCode Calculator",
+        "tile": "Converts between frame counts and 24fps / 30fps timecode, plus aspect-ratio resizing. Web and Windows versions.",
+        "lead": "A calculator that converts between frame counts and 24fps / 30fps timecode. It also has a tab for aspect-ratio resizing.",
+        "when": [
+          "Going back and forth between frame counts and seconds + frames",
+          "Checking how a duration maps between 24fps and 30fps",
+          "Resizing footage while keeping its aspect ratio"
+        ],
+        "howto": [
+          "Type a number and click (tap) the display to convert: FRAME → 24FPS → 30FPS",
+          "Timecode is entered from the right: typing “210” means 2 seconds 10 frames",
+          "It also works as a normal calculator; adding and subtracting in 24FPS / 30FPS mode works in timecode",
+          "In the resolution tab, enter the original size and a new width or height to get the other side (rounded up)"
+        ],
+        "features": [
+          "Keyboard: Enter = “=”, Esc = C, Delete = CE, Backspace = delete one digit, Tab = switch mode",
+          "Switch tabs with Alt+1 / Alt+2 on the web (Ctrl+Tab in the Windows app)",
+          "The original size in the resolution tab is remembered"
+        ],
+        "env": "Web: phone and desktop browsers / App: Windows 10 and 11",
+        "data": "The web version only saves the original size setting in this device's browser.",
+        "note": "The Windows version needs no installation; just double-click the exe. If Windows shows “Windows protected your PC” the first time, click “More info” → “Run anyway” (this appears because the app is not code-signed)."
+      }
+    }
+  ],
+  "games": [
+    {
+      "slug": "summon-card",
+      "url": "https://caprame.com/DotRoguelikeCardBattle/",
+      "image": "summon-card.jpg",
+      "color": "#2e2a24",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/DotRoguelikeCardBattle/",
+          "ja": "遊ぶ",
+          "en": "Play"
+        }
+      ],
+      "ja": {
+        "title": "ローグライクサモンカードゲーム",
+        "tile": "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトル。階層を進みながらデッキを育てていきます。",
+        "lead": "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトルです。階層を進みながらデッキを育てていきます。",
+        "when": [],
+        "howto": [
+          "カードどうしは、グー・チョキ・パーの相性で勝ち負けが決まります",
+          "階層を進みながらカードを手に入れて、デッキを強くしていきます",
+          "手に入れたカードは図鑑で確認できます"
+        ],
+        "features": [],
+        "env": "PC・スマホのブラウザ(インストール不要)",
+        "data": "セーブデータはこの端末のブラウザに保存されます。書き出し・読み込みもできます。",
+        "language": "日本語のみ",
+        "howto_label": "遊び方"
+      },
+      "en": {
+        "title": "Roguelike Summon Card Game",
+        "tile": "A pixel-art roguelike card battler built on rock-paper-scissors matchups. Grow your deck as you descend floor by floor. (Japanese only)",
+        "lead": "A pixel-art roguelike card battler built on rock-paper-scissors matchups. Grow your deck as you descend floor by floor.",
+        "when": [],
+        "howto": [
+          "Cards win or lose by rock-paper-scissors matchups",
+          "Collect cards as you go deeper and build up your deck",
+          "Check the cards you've found in the card index"
+        ],
+        "features": [],
+        "env": "Desktop and phone browsers (no install)",
+        "data": "Save data is stored in this device's browser and can be exported and imported.",
+        "language": "Japanese only",
+        "howto_label": "How to play"
+      }
+    }
+  ]
+}
