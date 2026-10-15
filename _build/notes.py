@@ -423,10 +423,10 @@ def list_page(posts, header_html, footer):
         </div>
       </section>"""
 
-    return (head("Notes", "Notes", "CGのtipsと雑記。", f"{SITE}/notes.html")
+    return (head("Notes", "Notes", "Tipsと雑記。", f"{SITE}/notes.html")
             + header_html("notes", page_is_list=True)
             + f"""
-  <p class="wrap lead" data-en="CG tips and miscellaneous notes, written in Japanese.">CGのtipsと雑記。</p>
+  <p class="wrap lead" data-en="Tips and miscellaneous notes, written in Japanese.">Tipsと雑記。</p>
 
   <main class="wrap">
     <div class="notes">
