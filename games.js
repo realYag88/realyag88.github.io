@@ -5,6 +5,16 @@
 */
 const GAMES = [
   {
+    "title": "サモンディフェンス",
+    "desc": "カードから魔物を召喚して道を守る、卓上遊戯風のタワーディフェンス。",
+    "title_en": "Summon Defense",
+    "desc_en": "A tabletop-style tower defense where you summon monsters from cards to guard the road.",
+    "page": "games/summon-defense/",
+    "url": "https://caprame.com/towerDefenseGame_01/",
+    "image": "images/summon-defense.jpg",
+    "color": "#2a2218"
+  },
+  {
     "title": "ローグライクサモンカードゲーム",
     "desc": "グー・チョキ・パーの相性で戦う、ドット絵のローグライクカードバトル。",
     "title_en": "Roguelike Summon Card Game",

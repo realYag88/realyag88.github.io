@@ -256,6 +256,56 @@
   ],
   "games": [
     {
+      "slug": "summon-defense",
+      "url": "https://caprame.com/towerDefenseGame_01/",
+      "image": "summon-defense.jpg",
+      "color": "#2a2218",
+      "buttons": [
+        {
+          "kind": "open",
+          "href": "https://caprame.com/towerDefenseGame_01/",
+          "ja": "遊ぶ",
+          "en": "Play"
+        }
+      ],
+      "ja": {
+        "title": "サモンディフェンス",
+        "tile": "カードから魔物を召喚して道を守る、卓上遊戯風のタワーディフェンス。",
+        "lead": "カードから魔物を召喚して道を守る、卓上遊戯風のタワーディフェンス。",
+        "when": [],
+        "howto": [
+          "はじめにカードの束を3つから1つ選び、その束の5種族で戦います。",
+          "ゲージを使って沿道にカードを置くと、キャラが召喚されて道を進む敵を攻撃します。",
+          "同じ種族のカードを重ねると進化します。手札どうしでも重ねられます。",
+          "敵を倒してレベルが上がると、カード・スキル・強化から1つ選べます。",
+          "スキルはボタンを押してから道をタップして使います。"
+        ],
+        "features": [],
+        "env": "スマホ・PCのブラウザ",
+        "data": "",
+        "language": "日本語のみ",
+        "howto_label": "遊び方"
+      },
+      "en": {
+        "title": "Summon Defense",
+        "tile": "A tabletop-style tower defense where you summon monsters from cards to guard the road.",
+        "lead": "A tabletop-style tower defense where you summon monsters from cards to guard the road.",
+        "when": [],
+        "howto": [
+          "First, pick one of three card bundles. You fight with the five tribes in that bundle.",
+          "Spend gauge to place cards beside the road. The summoned characters attack enemies walking along it.",
+          "Stack cards of the same tribe to evolve them. You can also stack cards in your hand.",
+          "When you level up by defeating enemies, choose one of a card, a skill or a boost.",
+          "To use a skill, press its button and then tap the road."
+        ],
+        "features": [],
+        "env": "Phone and desktop browsers",
+        "data": "",
+        "language": "Japanese only",
+        "howto_label": "How to play"
+      }
+    },
+    {
       "slug": "summon-card",
       "url": "https://caprame.com/DotRoguelikeCardBattle/",
       "image": "summon-card.jpg",
