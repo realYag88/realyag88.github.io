@@ -10,7 +10,7 @@ const GAMES = [
     "title_en": "Summon Defense",
     "desc_en": "A tabletop-style tower defense where you summon monsters from cards to guard the road.",
     "page": "games/summon-defense/",
-    "url": "https://caprame.com/towerDefenseGame_01/",
+    "url": "https://caprame.com/summon-defense/",
     "image": "images/summon-defense.jpg",
     "color": "#2a2218"
   },

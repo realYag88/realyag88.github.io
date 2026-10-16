@@ -257,13 +257,13 @@
   "games": [
     {
       "slug": "summon-defense",
-      "url": "https://caprame.com/towerDefenseGame_01/",
+      "url": "https://caprame.com/summon-defense/",
       "image": "summon-defense.jpg",
       "color": "#2a2218",
       "buttons": [
         {
           "kind": "open",
-          "href": "https://caprame.com/towerDefenseGame_01/",
+          "href": "https://caprame.com/summon-defense/",
           "ja": "遊ぶ",
           "en": "Play"
         }
