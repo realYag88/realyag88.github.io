@@ -7,7 +7,7 @@
     </clipPath>
   </defs>
   <g clip-path="url(#pupil-cut)">
-    <path d="M2 14 C12 1, 36 1, 46 14 C36 27, 12 27, 2 14 Z" fill="none" stroke="#d4a64a" stroke-width="2" stroke-linejoin="round"/>
-    <circle cx="24" cy="14" r="9.75" fill="#d4a64a"/>
+    <path d="M2 14 C12 1, 36 1, 46 14 C36 27, 12 27, 2 14 Z" fill="none" stroke="#a87b28" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="24" cy="14" r="9.75" fill="#a87b28"/>
   </g>
 </svg>

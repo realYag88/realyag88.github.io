@@ -284,7 +284,7 @@ def head(title_ja, title_en, desc, url, og_type="website", image="", content_lan
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title data-en="{esc(title_en)} | caprame">{esc(title_ja)} | カプラメー</title>
   <meta name="description" content="{esc(desc)}">
-  <meta name="theme-color" content="#1b1a1f">
+  <meta name="theme-color" content="#f4f1ea">
   <link rel="canonical" href="{url}">
   <meta property="og:title" content="{esc(title_ja)} | カプラメー">
   <meta property="og:description" content="{esc(desc)}">

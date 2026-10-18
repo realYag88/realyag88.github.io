@@ -1,12 +1,17 @@
 /* ===== カプラメー 共通スタイル ===== */
 :root {
-  --bg: #1b1a1f;          /* 背景 */
-  --surface: #232228;     /* 空きタイル */
-  --text: #ede8de;        /* 文字 */
-  --muted: #a8a39a;       /* 補足の文字 */
-  --line: #3a3741;        /* 枠線 */
-  --accent: #d4a64a;      /* ヤギの目の色 */
-  --shade: rgba(16, 15, 19, 0.86); /* タイルを暗くする色 */
+  --bg: #f4f1ea;          /* 背景（オフホワイト） */
+  --surface: #e9e5dc;     /* 空きタイル・枠の中 */
+  --text: #23211f;        /* 文字 */
+  --text-soft: #4a4640;   /* 本文の文字 */
+  --muted: #6b665e;       /* 補足の文字 */
+  --line: #d6d1c6;        /* 枠線 */
+  --accent: #8a6a1f;      /* リンク・ボタンの金色（明るい背景用に濃いめ） */
+  --accent-hover: #6f5418;
+  --shade: rgba(22, 21, 24, 0.86); /* タイルを暗くする色 */
+  --on-shade: #ede8de;    /* 暗くしたタイルの上の文字 */
+  --on-shade-soft: #d2ccc1;
+  --on-shade-accent: #d4a64a;
   --mincho: "Shippori Mincho B1", serif;
   --gothic: "Zen Kaku Gothic New", sans-serif;
 }
@@ -136,11 +141,11 @@ main { flex: 1; }
   font-family: var(--mincho);
   font-weight: 700;
   font-size: 15px;
-  color: var(--text);
+  color: var(--on-shade);
 }
 .tile-desc, .tile-go { display: none; }
-.tile-desc { font-size: 14px; line-height: 1.7; color: #d2ccc1; }
-.tile-go { font-size: 13px; letter-spacing: 0.1em; color: var(--accent); }
+.tile-desc { font-size: 14px; line-height: 1.7; color: var(--on-shade-soft); }
+.tile-go { font-size: 13px; letter-spacing: 0.1em; color: var(--on-shade-accent); }
 
 .tile-empty {
   aspect-ratio: 1 / 1;
@@ -249,7 +254,7 @@ main { flex: 1; }
   font-weight: 700;
   font-size: 18px;
 }
-.doc p, .doc ul { margin: 0 0 12px; color: #d2ccc1; }
+.doc p, .doc ul { margin: 0 0 12px; color: var(--text-soft); }
 .doc ul { padding-left: 1.4em; }
 .doc a { color: var(--accent); }
 .doc a:hover { color: var(--text); }
@@ -327,7 +332,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   margin: 0 0 24px;
   font-size: 15px;
   line-height: 1.9;
-  color: #d2ccc1;
+  color: var(--text-soft);
 }
 .detail-shot {
   aspect-ratio: 16 / 10;
@@ -363,7 +368,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   text-align: center;
 }
 .btn-primary { background: var(--accent); color: var(--bg); }
-.btn-primary:hover { background: #e3b961; color: var(--bg); }
+.btn-primary:hover { background: var(--accent-hover); color: var(--bg); }
 .btn-secondary { border: 1px solid var(--line); color: var(--text); }
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -386,7 +391,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   padding-left: 1.4em;
   font-size: 15px;
   line-height: 1.9;
-  color: #d2ccc1;
+  color: var(--text-soft);
 }
 .detail-section li + li { margin-top: 4px; }
 .detail-spec {
@@ -401,7 +406,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   line-height: 1.8;
 }
 .detail-spec dt { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; }
-.detail-spec dd { margin: 0 0 12px; color: #d2ccc1; }
+.detail-spec dd { margin: 0 0 12px; color: var(--text-soft); }
 .detail-spec dd:last-child { margin-bottom: 0; }
 .tab[aria-current="true"] { border-color: var(--text); }
 
@@ -416,7 +421,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   background: var(--shade);
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: var(--text);
+  color: var(--on-shade);
 }
 
 @media (min-width: 721px) {
@@ -457,7 +462,7 @@ html:not([data-lang="en"]) [data-lang-block="en"] { display: none; }
   overflow: hidden;
   font-size: 14px;
   line-height: 1.8;
-  color: #bdb7ad;
+  color: var(--muted);
 }
 .note-thumb {
   flex: none;
@@ -551,7 +556,7 @@ a.note-tag:hover { color: var(--accent); }
 .note-related h2 { margin: 0 0 16px; font-family: var(--mincho); font-size: 18px; letter-spacing: 0.06em; }
 
 /* 記事の本文 */
-.prose { font-size: 16px; line-height: 2; color: #d9d3c8; overflow-wrap: anywhere; }
+.prose { font-size: 16px; line-height: 2; color: var(--text-soft); overflow-wrap: anywhere; }
 .prose > :first-child { margin-top: 0; }
 .prose p, .prose ul, .prose ol, .prose blockquote, .prose pre, .prose figure, .prose .embed, .prose .table-wrap { margin: 0 0 24px; }
 .prose h2 {
@@ -588,10 +593,10 @@ a.note-tag:hover { color: var(--accent); }
   overflow-x: auto;
   border-radius: 8px;
   border: 1px solid var(--line);
-  background: #141317;
+  background: var(--surface);
   line-height: 1.7;
 }
-.prose pre code { padding: 0; background: none; font-size: 13px; color: #d9d3c8; }
+.prose pre code { padding: 0; background: none; font-size: 13px; color: var(--text-soft); }
 .prose .embed { position: relative; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--surface); }
 .prose .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .prose .table-wrap { overflow-x: auto; }
