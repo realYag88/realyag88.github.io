@@ -53,5 +53,15 @@ const TOOLS = [
     "url": "https://caprame.com/timecode-calculator/",
     "image": "images/timecode-calculator.jpg",
     "color": "#2b2620"
+  },
+  {
+    "title": "雷光ジェネレーター",
+    "desc": "雷エフェクトを生成し、発生から消えるまでを透過PNGの連番で書き出すツール。",
+    "title_en": "Lightning Generator",
+    "desc_en": "Generates lightning effects and exports them from strike to fade-out as a transparent PNG sequence. (Japanese UI)",
+    "page": "tools/lightning-generator/",
+    "url": "https://caprame.com/lightning-generator/",
+    "image": "images/lightning-generator.jpg",
+    "color": "#1f2128"
   }
 ];
