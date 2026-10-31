@@ -53,5 +53,15 @@ const TOOLS = [
     "url": "https://caprame.com/timecode-calculator/",
     "image": "images/timecode-calculator.jpg",
     "color": "#2b2620"
+  },
+  {
+    "title": "リネームツール",
+    "desc": "フォルダ内や選択したファイルを、連番か文字列の置換でまとめてリネームするWindows用ツール。",
+    "title_en": "Rename Tool",
+    "desc_en": "A Windows tool that batch-renames files in a folder or a selection, by sequence numbers or text replacement. (Japanese UI)",
+    "page": "tools/rename-tool/",
+    "url": "https://caprame.com/tools/rename-tool/",
+    "image": "",
+    "color": "#262a30"
   }
 ];
