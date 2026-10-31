@@ -306,6 +306,64 @@
         "env": "Desktop browsers",
         "data": "Settings are saved in this device's browser."
       }
+    },
+    {
+      "slug": "rename-tool",
+      "url": "https://caprame.com/tools/rename-tool/",
+      "image": "",
+      "color": "#262a30",
+      "buttons": [
+        {
+          "kind": "download",
+          "href": "https://github.com/realYag88/rename-tool/releases/latest/download/RenameTool.zip",
+          "ja": "Windows版をダウンロード(.zip)",
+          "en": "Download for Windows (.zip)"
+        }
+      ],
+      "ja": {
+        "title": "リネームツール",
+        "tile": "フォルダ内や選択したファイルを、連番か文字列の置換でまとめてリネームするWindows用ツール。",
+        "lead": "フォルダ内や選択したファイルを、連番か文字列の置換でまとめてリネームするWindows用ツール。",
+        "when": [
+          "連番素材のファイル名をまとめて付け直したい時",
+          "ファイル名の一部をまとめて書き換えたい時"
+        ],
+        "howto": [
+          "「フォルダを追加」「ファイルを追加」か、ウィンドウへのドラッグ＆ドロップで対象を入れます。",
+          "「連番」タブでは、ベース名・区切り・開始番号・桁数・増分を決めます。番号はリストの並び順で振られます。",
+          "「置換」タブでは、検索する文字と置換後の文字を入れます。正規表現も使えます。",
+          "新しい名前を確認して「リネーム実行」を押します。直前の1回は「元に戻す」で戻せます。"
+        ],
+        "features": [
+          "↑↓ボタンで並び順を変更 / Delete=リストから外す / Ctrl+A=全選択",
+          "Install-SendTo.bat を実行すると、右クリックの「送る」から開けます"
+        ],
+        "env": "Windows 10・11",
+        "data": "",
+        "note": "インストール不要。zipを展開して RenameTool.bat をダブルクリックで起動します。"
+      },
+      "en": {
+        "title": "Rename Tool",
+        "tile": "A Windows tool that batch-renames files in a folder or a selection, by sequence numbers or text replacement. (Japanese UI)",
+        "lead": "A Windows tool that batch-renames files in a folder or a selection, by sequence numbers or text replacement.",
+        "when": [
+          "When you want to rename a set of sequence files in one go",
+          "When you want to change part of many file names at once"
+        ],
+        "howto": [
+          "Add files with the add-folder or add-files buttons, or drag and drop them onto the window.",
+          "In the sequence tab, set the base name, separator, start number, digits and step. Numbers follow the order of the list.",
+          "In the replace tab, enter the text to find and the text to replace it with. Regular expressions are supported.",
+          "Check the new names and press the rename button. You can undo the last rename."
+        ],
+        "features": [
+          "↑ / ↓ buttons change the order / Delete = remove from list / Ctrl+A = select all",
+          "Run Install-SendTo.bat to open the tool from the right-click Send to menu"
+        ],
+        "env": "Windows 10 and 11",
+        "data": "",
+        "note": "No installation needed. Unzip it and double-click RenameTool.bat."
+      }
     }
   ],
   "games": [
