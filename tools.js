@@ -71,7 +71,7 @@ const TOOLS = [
     "desc_en": "A Windows tool that batch-renames files in a folder or a selection, by sequence numbers or text replacement. (Japanese UI)",
     "page": "tools/rename-tool/",
     "url": "https://caprame.com/tools/rename-tool/",
-    "image": "",
+    "image": "images/rename-tool.jpg",
     "color": "#262a30"
   }
 ];
